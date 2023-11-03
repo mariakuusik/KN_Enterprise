@@ -259,7 +259,8 @@
         <addUniqueConstraint columnNames="email" constraintName="uk_ob8kqyqqgmefl0aco34akdtpe" tableName="user"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-16">
-        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50" maxValue="9223372036854775807" minValue="1" sequenceName="sequence_generator" startValue="1"/>
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50" maxValue="9223372036854775807"
+                        minValue="1" sequenceName="sequence_generator" startValue="1"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-17">
         <createTable tableName="address">
@@ -334,84 +335,639 @@
         </createTable>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-23">
-        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="team" constraintName="fk1dvknacagoatml8b2muhgc5w4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="team"
+                                 constraintName="fk1dvknacagoatml8b2muhgc5w4" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="user" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-24">
-        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="department" constraintName="fk1ei4mpm2vsw7sk1t2wj4cxjfv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="department"
+                                 constraintName="fk1ei4mpm2vsw7sk1t2wj4cxjfv" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="user" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-25">
-        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="employees_groups" constraintName="fk251guqk03yvns8amjvbgxq0wy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="employees_groups"
+                                 constraintName="fk251guqk03yvns8amjvbgxq0wy" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="employee" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-26">
-        <addForeignKeyConstraint baseColumnNames="organization_id" baseTableName="employee" constraintName="fk2rna2w2imtuuk9f2et8yllawk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="organization" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="organization_id" baseTableName="employee"
+                                 constraintName="fk2rna2w2imtuuk9f2et8yllawk" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="organization" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-27">
-        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="organization" constraintName="fk4nj3ubvdet0sq0u59wber931c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="organization"
+                                 constraintName="fk4nj3ubvdet0sq0u59wber931c" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="user" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-28">
-        <addForeignKeyConstraint baseColumnNames="tax_registration_country_id" baseTableName="organization" constraintName="fk7m1hwoki9ektkrchqwtdf0ht0" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="country" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="tax_registration_country_id" baseTableName="organization"
+                                 constraintName="fk7m1hwoki9ektkrchqwtdf0ht0" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="country" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-29">
-        <addForeignKeyConstraint baseColumnNames="team_id" baseTableName="employee" constraintName="fk8d7lrsr6kwirr93rx0tafnoqa" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="team" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="team_id" baseTableName="employee"
+                                 constraintName="fk8d7lrsr6kwirr93rx0tafnoqa" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="team" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-30">
-        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="organization" constraintName="fk97eigsvq2tsrd2bge4ox651wh" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="address" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="organization"
+                                 constraintName="fk97eigsvq2tsrd2bge4ox651wh" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="address" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-31">
-        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="cost_center" constraintName="fk9t3sudx2esb9ce9fv268vsta9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="cost_center"
+                                 constraintName="fk9t3sudx2esb9ce9fv268vsta9" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="user" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-32">
-        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="job_title" constraintName="fk9wy0fkvhotoyawetel624qryp" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="job_title"
+                                 constraintName="fk9wy0fkvhotoyawetel624qryp" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="user" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-33">
-        <addForeignKeyConstraint baseColumnNames="cost_center_id" baseTableName="employee" constraintName="fkb8o64tbj1yboy7s34v8wqchfi" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="cost_center" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="cost_center_id" baseTableName="employee"
+                                 constraintName="fkb8o64tbj1yboy7s34v8wqchfi" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="cost_center" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-34">
-        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="employee" constraintName="fkbejtwvg9bxus2mffsm3swj3u9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="department" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="employee"
+                                 constraintName="fkbejtwvg9bxus2mffsm3swj3u9" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="department" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-35">
-        <addForeignKeyConstraint baseColumnNames="creator_id" baseTableName="contract" constraintName="fkch9j98htlj6862ah4qtsn2fb4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="creator_id" baseTableName="contract"
+                                 constraintName="fkch9j98htlj6862ah4qtsn2fb4" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="user" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-36">
-        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="business_unit" constraintName="fkd457vole4r9mwbji6fj3481o1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="business_unit"
+                                 constraintName="fkd457vole4r9mwbji6fj3481o1" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="user" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-37">
-        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="employees_groups" constraintName="fkdikmt519u0sfnh0jqksb4r1oq" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="group" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="employees_groups"
+                                 constraintName="fkdikmt519u0sfnh0jqksb4r1oq" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="group" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-38">
-        <addForeignKeyConstraint baseColumnNames="country_id" baseTableName="address" constraintName="fke54x81nmccsk5569hsjg1a6ka" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="country" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="country_id" baseTableName="address"
+                                 constraintName="fke54x81nmccsk5569hsjg1a6ka" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="country" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-39">
-        <addForeignKeyConstraint baseColumnNames="office_id" baseTableName="employee" constraintName="fkhj91sc5tssmlrr7syiakjdxg2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="location" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="office_id" baseTableName="employee"
+                                 constraintName="fkhj91sc5tssmlrr7syiakjdxg2" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="location" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-40">
-        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="division" constraintName="fki6hq5d10p8jbhexy9r3ray8oy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="division"
+                                 constraintName="fki6hq5d10p8jbhexy9r3ray8oy" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="user" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-41">
-        <addForeignKeyConstraint baseColumnNames="contact_id" baseTableName="organization" constraintName="fkjononvt4gs6u6xbxm622oken3" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="contact" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="contact_id" baseTableName="organization"
+                                 constraintName="fkjononvt4gs6u6xbxm622oken3" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="contact" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-42">
-        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="group" constraintName="fklrsxqjpbyinytekhervpy5j9n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="group"
+                                 constraintName="fklrsxqjpbyinytekhervpy5j9n" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="user" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-43">
-        <addForeignKeyConstraint baseColumnNames="solid_line_manager_id" baseTableName="employee" constraintName="fkmhvom9r98bsrqrhwib6q8dya7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="solid_line_manager_id" baseTableName="employee"
+                                 constraintName="fkmhvom9r98bsrqrhwib6q8dya7" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="employee" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-44">
-        <addForeignKeyConstraint baseColumnNames="binary_id" baseTableName="contract" constraintName="fkne62p2joo6dyuuku96wkvqkya" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="files" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="binary_id" baseTableName="contract"
+                                 constraintName="fkne62p2joo6dyuuku96wkvqkya" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="files" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-45">
-        <addForeignKeyConstraint baseColumnNames="division_id" baseTableName="employee" constraintName="fkoxlp1b4xvwyjgb7hh4wd54jy4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="division" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="division_id" baseTableName="employee"
+                                 constraintName="fkoxlp1b4xvwyjgb7hh4wd54jy4" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="division" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-46">
-        <addForeignKeyConstraint baseColumnNames="job_title_id" baseTableName="employee" constraintName="fkp3gjxglyx92kclcf5u6gwpt8v" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="job_title" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="job_title_id" baseTableName="employee"
+                                 constraintName="fkp3gjxglyx92kclcf5u6gwpt8v" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="job_title" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-47">
-        <addForeignKeyConstraint baseColumnNames="business_unit_id" baseTableName="employee" constraintName="fkp4vahj8g9cybb87r69rcqv2k7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="business_unit" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="business_unit_id" baseTableName="employee"
+                                 constraintName="fkp4vahj8g9cybb87r69rcqv2k7" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="business_unit" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-48">
-        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="contract" constraintName="fkr2iw6grixlkbx43q2svdrhbb9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="employee" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="contract"
+                                 constraintName="fkr2iw6grixlkbx43q2svdrhbb9" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="employee" validate="true"/>
     </changeSet>
     <changeSet author="stefano.fiorenza (generated)" id="1677882888442-49">
-        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="location" constraintName="fkt8psi9b5mkkfc0r9fgptngwhg" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="address" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="location"
+                                 constraintName="fkt8psi9b5mkkfc0r9fgptngwhg" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="address" validate="true"/>
+    </changeSet>
+    <changeSet id="1698846163560-1" author="maria (generated)">
+        <createSequence incrementBy="50" sequenceName="sequence_generator" startValue="1"/>
+    </changeSet>
+    <changeSet id="1698846163560-2" author="maria (generated)">
+        <createTable tableName="[group]">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_[group]"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-3" author="maria (generated)">
+        <createTable tableName="address">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_address"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+            <column name="country_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postal_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-4" author="maria (generated)">
+        <createTable tableName="business_unit">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_business_unit"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-5" author="maria (generated)">
+        <createTable tableName="contact">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_contact"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="VARCHAR(255)"/>
+            <column name="job_title" type="VARCHAR(255)"/>
+            <column name="note" type="VARCHAR(255)"/>
+            <column name="reception" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-6" author="maria (generated)">
+        <createTable tableName="contract">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_contract"/>
+            </column>
+            <column name="binary_id" type="BIGINT"/>
+            <column name="creator_id" type="BIGINT"/>
+            <column name="employee_id" type="BIGINT"/>
+            <column name="active" type="BOOLEAN"/>
+            <column name="created_at" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-7" author="maria (generated)">
+        <createTable tableName="cost_center">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_cost_center"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-8" author="maria (generated)">
+        <createTable tableName="country">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_country"/>
+            </column>
+            <column name="iso" type="VARCHAR(255)"/>
+            <column name="iso2" type="VARCHAR(255)"/>
+            <column name="iso3" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-9" author="maria (generated)">
+        <createTable tableName="department">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_department"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-10" author="maria (generated)">
+        <createTable tableName="division">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_division"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-11" author="maria (generated)">
+        <createTable tableName="employee">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_employee"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+            <column name="first_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birth_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="DATE"/>
+            <column name="company_phone" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company_mobile_phone" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="business_unit_id" type="BIGINT"/>
+            <column name="organization_id" type="BIGINT"/>
+            <column name="office_id" type="BIGINT"/>
+            <column name="job_title_id" type="BIGINT"/>
+            <column name="department_id" type="BIGINT"/>
+            <column name="division_id" type="BIGINT"/>
+            <column name="cost_center_id" type="BIGINT"/>
+            <column name="team_id" type="BIGINT"/>
+            <column name="solid_line_manager_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-12" author="maria (generated)">
+        <createTable tableName="employees_groups">
+            <column name="employee_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_employees_groups"/>
+            </column>
+            <column name="group_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_employees_groups"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-13" author="maria (generated)">
+        <createTable tableName="files">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_files"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="size" type="BIGINT"/>
+            <column name="content_type" type="VARCHAR(255)"/>
+            <column name="bytes" type="BLOB"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-14" author="maria (generated)">
+        <createTable tableName="job_title">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_job_title"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-15" author="maria (generated)">
+        <createTable tableName="location">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_location"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+            <column name="address_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ownership" type="VARCHAR(255)"/>
+            <column name="map_coordinates" type="BOOLEAN"/>
+            <column name="latitude" type="VARCHAR(255)"/>
+            <column name="longitude" type="VARCHAR(255)"/>
+            <column name="use" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-16" author="maria (generated)">
+        <createTable tableName="organization">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_organization"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+            <column name="alias" type="VARCHAR(255)"/>
+            <column name="vat_number" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registration_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tax_registration_country_id" type="BIGINT"/>
+            <column name="address_id" type="BIGINT"/>
+            <column name="contact_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-17" author="maria (generated)">
+        <createTable tableName="role">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_role"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-18" author="maria (generated)">
+        <createTable tableName="team">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_team"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="start_date" type="DATETIME"/>
+            <column name="end_date" type="DATETIME"/>
+            <column name="created_by" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="true" name="active" type="boolean"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-19" author="maria (generated)">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_users"/>
+            </column>
+            <column name="login" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(254)"/>
+            <column name="active" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1698846163560-20" author="maria (generated)">
+        <addUniqueConstraint columnNames="email" constraintName="uc_employee_email" tableName="employee"/>
+    </changeSet>
+    <changeSet id="1698846163560-21" author="maria (generated)">
+        <addUniqueConstraint columnNames="email" constraintName="uc_users_email" tableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-22" author="maria (generated)">
+        <addUniqueConstraint columnNames="login" constraintName="uc_users_login" tableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-23" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="country_id" baseTableName="address"
+                                 constraintName="FK_ADDRESS_ON_COUNTRY" referencedColumnNames="id"
+                                 referencedTableName="country"/>
+    </changeSet>
+    <changeSet id="1698846163560-24" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="business_unit"
+                                 constraintName="FK_BUSINESS_UNIT_ON_CREATED_BY" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-25" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="binary_id" baseTableName="contract"
+                                 constraintName="FK_CONTRACT_ON_BINARY" referencedColumnNames="id"
+                                 referencedTableName="files"/>
+    </changeSet>
+    <changeSet id="1698846163560-26" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="creator_id" baseTableName="contract"
+                                 constraintName="FK_CONTRACT_ON_CREATOR" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-27" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="contract"
+                                 constraintName="FK_CONTRACT_ON_EMPLOYEE" referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+    <changeSet id="1698846163560-28" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="cost_center"
+                                 constraintName="FK_COST_CENTER_ON_CREATED_BY" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-29" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="department"
+                                 constraintName="FK_DEPARTMENT_ON_CREATED_BY" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-30" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="division"
+                                 constraintName="FK_DIVISION_ON_CREATED_BY" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-31" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="business_unit_id" baseTableName="employee"
+                                 constraintName="FK_EMPLOYEE_ON_BUSINESS_UNIT" referencedColumnNames="id"
+                                 referencedTableName="business_unit"/>
+    </changeSet>
+    <changeSet id="1698846163560-32" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="cost_center_id" baseTableName="employee"
+                                 constraintName="FK_EMPLOYEE_ON_COST_CENTER" referencedColumnNames="id"
+                                 referencedTableName="cost_center"/>
+    </changeSet>
+    <changeSet id="1698846163560-33" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="department_id" baseTableName="employee"
+                                 constraintName="FK_EMPLOYEE_ON_DEPARTMENT" referencedColumnNames="id"
+                                 referencedTableName="department"/>
+    </changeSet>
+    <changeSet id="1698846163560-34" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="division_id" baseTableName="employee"
+                                 constraintName="FK_EMPLOYEE_ON_DIVISION" referencedColumnNames="id"
+                                 referencedTableName="division"/>
+    </changeSet>
+    <changeSet id="1698846163560-35" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="job_title_id" baseTableName="employee"
+                                 constraintName="FK_EMPLOYEE_ON_JOB_TITLE" referencedColumnNames="id"
+                                 referencedTableName="job_title"/>
+    </changeSet>
+    <changeSet id="1698846163560-36" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="office_id" baseTableName="employee"
+                                 constraintName="FK_EMPLOYEE_ON_OFFICE" referencedColumnNames="id"
+                                 referencedTableName="location"/>
+    </changeSet>
+    <changeSet id="1698846163560-37" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="organization_id" baseTableName="employee"
+                                 constraintName="FK_EMPLOYEE_ON_ORGANIZATION" referencedColumnNames="id"
+                                 referencedTableName="organization"/>
+    </changeSet>
+    <changeSet id="1698846163560-38" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="solid_line_manager_id" baseTableName="employee"
+                                 constraintName="FK_EMPLOYEE_ON_SOLID_LINE_MANAGER" referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+    <changeSet id="1698846163560-39" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="team_id" baseTableName="employee" constraintName="FK_EMPLOYEE_ON_TEAM"
+                                 referencedColumnNames="id" referencedTableName="team"/>
+    </changeSet>
+    <changeSet id="1698846163560-40" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="job_title"
+                                 constraintName="FK_JOB_TITLE_ON_CREATED_BY" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-41" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="location"
+                                 constraintName="FK_LOCATION_ON_ADDRESS" referencedColumnNames="id"
+                                 referencedTableName="address"/>
+    </changeSet>
+    <changeSet id="1698846163560-42" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="location"
+                                 constraintName="FK_LOCATION_ON_CREATED_BY" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-43" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="organization"
+                                 constraintName="FK_ORGANIZATION_ON_ADDRESS" referencedColumnNames="id"
+                                 referencedTableName="address"/>
+    </changeSet>
+    <changeSet id="1698846163560-44" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="contact_id" baseTableName="organization"
+                                 constraintName="FK_ORGANIZATION_ON_CONTACT" referencedColumnNames="id"
+                                 referencedTableName="contact"/>
+    </changeSet>
+    <changeSet id="1698846163560-45" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="organization"
+                                 constraintName="FK_ORGANIZATION_ON_CREATED_BY" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-46" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="tax_registration_country_id" baseTableName="organization"
+                                 constraintName="FK_ORGANIZATION_ON_TAX_REGISTRATION_COUNTRY" referencedColumnNames="id"
+                                 referencedTableName="country"/>
+    </changeSet>
+    <changeSet id="1698846163560-47" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="team"
+                                 constraintName="FK_TEAM_ON_CREATED_BY" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-48" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="created_by" baseTableName="[group]"
+                                 constraintName="FK_[GROUP]_ON_CREATED_BY" referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+    <changeSet id="1698846163560-49" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="employees_groups"
+                                 constraintName="fk_empgro_on_employee" referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+    <changeSet id="1698846163560-50" author="maria (generated)">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="employees_groups"
+                                 constraintName="fk_empgro_on_group" referencedColumnNames="id"
+                                 referencedTableName="[group]"/>
     </changeSet>
 </databaseChangeLog>
