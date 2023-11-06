@@ -13,7 +13,7 @@ import java.io.Serializable;
  * A user.
  */
 @Entity
-@Table(name = "users")
+@Table(name = "user", schema = "public")
 @Data
 @SuperBuilder(toBuilder=true)
 @NoArgsConstructor
