@@ -40,5 +40,12 @@ public class TeamController {
         teamService.updateTeam(teamEditDto, id);
     }
 
-
+    @PatchMapping(value = "/teams/deactivate")
+    @Operation(summary = "Deactivates active team",
+    description = "Sets active to false and adds end-date")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK")})
+    public void deactivateTeam(@RequestParam Long id){
+        teamService.deactivateTeam(id);
+    }
 }

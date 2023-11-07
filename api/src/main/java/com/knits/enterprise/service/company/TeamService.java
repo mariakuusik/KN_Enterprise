@@ -29,13 +29,13 @@ public class TeamService {
     @Transactional
     public void createNewTeam(TeamCreateDto teamCreateDto) {
         Boolean teamNameExists = teamRepository.existsByName(teamCreateDto.getTeamName());
-        if(teamNameExists.equals(false)){
+        if (teamNameExists.equals(false)) {
             Team team = teamMapper.toCreateTeam(teamCreateDto);
             team.setStartDate(LocalDateTime.now());
             team.setEndDate(null);
             team.setActive(true);
             Optional<User> optionalUser = userRepository.findOneByLogin(teamCreateDto.getLogin());
-            if(optionalUser.isPresent()){
+            if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
                 team.setCreatedBy(user);
                 teamRepository.save(team);
@@ -45,10 +45,19 @@ public class TeamService {
 
     public void updateTeam(TeamEditDto teamEditDto, Long id) {
         Optional<Team> optionalTeam = teamRepository.findById(id);
-        if(optionalTeam.isPresent()){
+        if (optionalTeam.isPresent()) {
             Team team = optionalTeam.get();
             teamMapper.partialUpdate(teamEditDto, team);
             teamRepository.save(team);
+        }
+    }
+
+    public void deactivateTeam(Long id) {
+        Optional<Team> optionalTeam = teamRepository.findById(id);
+        if (optionalTeam.isPresent()) {
+            Team team = optionalTeam.get();
+            team.setEndDate(LocalDateTime.now());
+            teamRepository.updateActiveBy(false);
         }
     }
 }
