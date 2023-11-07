@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface TeamRepository extends ActiveEntityRepository<Team> {
     Optional<Team> findByName(String name);
     Boolean existsByName(String name);
+
 }

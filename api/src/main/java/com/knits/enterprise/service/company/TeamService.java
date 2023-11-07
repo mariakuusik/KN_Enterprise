@@ -1,6 +1,8 @@
 package com.knits.enterprise.service.company;
 
 import com.knits.enterprise.dto.company.TeamCreateDto;
+import com.knits.enterprise.dto.company.TeamDto;
+import com.knits.enterprise.dto.company.TeamEditDto;
 import com.knits.enterprise.exceptions.TeamException;
 import com.knits.enterprise.mapper.company.TeamMapper;
 import com.knits.enterprise.model.company.Team;
@@ -39,6 +41,14 @@ public class TeamService {
                 teamRepository.save(team);
             }
         } else throw new TeamException("Team with name " + teamCreateDto.getTeamName() + " already exists");
+    }
 
+    public void updateTeam(TeamEditDto teamEditDto, Long id) {
+        Optional<Team> optionalTeam = teamRepository.findById(id);
+        if(optionalTeam.isPresent()){
+            Team team = optionalTeam.get();
+            teamMapper.partialUpdate(teamEditDto, team);
+            teamRepository.save(team);
+        }
     }
 }
