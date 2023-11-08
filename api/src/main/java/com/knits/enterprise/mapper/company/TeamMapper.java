@@ -16,7 +16,6 @@ import java.util.List;
         uses = {UserMapper.class})
 public interface TeamMapper extends AbstractOrganizationStructureMapper<Team, TeamDto> {
 
-
     @Mapping(source = "teamDescription", target = "description")
     @Mapping(source = "teamName", target = "name")
     Team toCreateTeam(TeamCreateDto teamCreateDto);
@@ -26,11 +25,8 @@ public interface TeamMapper extends AbstractOrganizationStructureMapper<Team, Te
     @Mapping(source = "endDate", target = "endDate")
     Team partialUpdate(TeamEditDto teamEditDto, @MappingTarget Team team);
 
-
-
     @Mapping(source = "teamName", target = "name")
     Team toSearchEntity(TeamSearchDto teamSearchDto);
-
 
     @Mapping(source = "name", target = "teamName")
     @Mapping(source = "description", target = "teamDescription")

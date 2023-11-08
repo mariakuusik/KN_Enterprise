@@ -35,7 +35,6 @@ public class TeamService {
         if (teamNameExists.equals(false)) {
             Team team = teamMapper.toCreateTeam(teamCreateDto);
             team.setStartDate(LocalDateTime.now());
-            team.setEndDate(null);
             team.setActive(true);
             Optional<User> optionalUser = userRepository.findOneByLogin(teamCreateDto.getLogin());
             if (optionalUser.isPresent()) {
@@ -67,9 +66,7 @@ public class TeamService {
     public List<TeamResponseDto> filterTeams(TeamSearchDto teamSearchDto) {
         Team teamSearchEntity = teamMapper.toSearchEntity(teamSearchDto);
         Optional<User> optionalUser = userRepository.findOneByLogin(teamSearchDto.getCreatedByLogin());
-        if (optionalUser.isPresent()){
-            teamSearchEntity.setCreatedBy(optionalUser.get());
-        }
+        optionalUser.ifPresent(teamSearchEntity::setCreatedBy);
         List<Team> teams = teamRepository.findAllIncludingActive();
         List<Team> filteredTeams = teams
                 .stream()
@@ -84,7 +81,6 @@ public class TeamService {
                     if (teamSearchDto.getEndDate() != null && !team.getStartDate().isAfter(teamSearchDto.getEndDate())){
                         include = false;
                     }
-
                     if (teamSearchDto.getCreatedByLogin() != null && !team.getCreatedBy().getLogin().equals(teamSearchDto.getCreatedByLogin())){
                         include = false;
                     }
@@ -93,4 +89,6 @@ public class TeamService {
                 .collect(Collectors.toList());
         return teamMapper.toTeamResponseDtos(filteredTeams);
     }
+
+
 }

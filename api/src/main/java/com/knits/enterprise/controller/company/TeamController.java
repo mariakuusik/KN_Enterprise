@@ -5,7 +5,6 @@ import com.knits.enterprise.dto.search.TeamSearchDto;
 import com.knits.enterprise.dto.company.TeamCreateDto;
 import com.knits.enterprise.dto.company.TeamEditDto;
 import com.knits.enterprise.mapper.company.TeamMapper;
-import com.knits.enterprise.model.company.Team;
 import com.knits.enterprise.service.company.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,9 +25,6 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
-    @Autowired
-    private TeamMapper teamMapper;
-
     @PostMapping(value = "/teams")
     @Operation(summary = "Creates new Team")
     @ApiResponses(value = {
@@ -39,7 +35,7 @@ public class TeamController {
     }
 
     @PutMapping(value = "/teams")
-    @Operation(summary = "Edits excisting team",
+    @Operation(summary = "Edits existing team",
             description = "Finds team by teamId. Possible to edit: name, description, active, enddate")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK")})
@@ -57,13 +53,12 @@ public class TeamController {
     }
 
     @GetMapping(value = "/teams")
-    @Operation(summary = "Search for teams by filters",
+    @Operation(summary = "Searches for teams by filters",
             description = "filters are startDate, endDate, createdBy, teamName")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "403", description = "Denied"),
-            @ApiResponse(responseCode = "404", description = "No teams were found based on these filters")
-    })
+            @ApiResponse(responseCode = "404", description = "No teams were found based on these filters")})
     public ResponseEntity<List<TeamResponseDto>> findTeams(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "startDateFrom", required = false) LocalDateTime startDateFrom,
