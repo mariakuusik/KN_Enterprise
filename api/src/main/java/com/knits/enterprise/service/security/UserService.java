@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -38,7 +39,7 @@ public class UserService {
     public UserDto save(UserDto userDto) {
         log.debug("Request to save User : {}", userDto);
         User user = userMapper.toEntity(userDto);
-        return userMapper.toDto( userRepository.save(user));
+        return userMapper.toDto(userRepository.save(user));
     }
 
     /**
@@ -106,9 +107,18 @@ public class UserService {
         throw new UnsupportedOperationException("not yet implementes");
     }
 
+    public User getCurrentUser() {
+        Optional<User> optionalUser = userRepository.findById(1L);
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        } else {
+            throw new UserException("User not found");
+        }
+    }
 
-
-
-
+    public UserDto getCurrentUserAsDto() {
+        User currentUser = getCurrentUser();
+        return userMapper.toDto(currentUser);
+    }
 
 }

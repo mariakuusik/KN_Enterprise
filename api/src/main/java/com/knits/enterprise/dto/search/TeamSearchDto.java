@@ -24,31 +24,31 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeamSearchDto extends GenericSearchDto<Team> {
-    private String teamName;
+    private String name;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private String createdByLogin;
+//    private String createdByLogin;
 
     protected void addFilters(Root<Team> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder, List<Predicate> filters) {
 
-        if (StringUtils.isNotEmpty(teamName)) {
-            Predicate teamNameAsPredicate = criteriaBuilder.equal(root.get("teamName"), teamName);
+        if (StringUtils.isNotEmpty(name)) {
+            Predicate teamNameAsPredicate = criteriaBuilder.equal(root.get("name"), name);
             filters.add(teamNameAsPredicate);
         }
 
-        if (StringUtils.isNotEmpty(startDate.toString())) {
+        if (startDate!=null) {
             Predicate startDateAsPredicate = criteriaBuilder.equal(root.get("startDate"), startDate);
             filters.add(startDateAsPredicate);
         }
 
-        if (StringUtils.isNotEmpty(endDate.toString())) {
+        if (endDate!=null) {
             Predicate endDateAsAPredicate = criteriaBuilder.equal(root.get("endData"), endDate);
             filters.add(endDateAsAPredicate);
         }
 
-        if (StringUtils.isNotEmpty(createdByLogin)) {
-            Predicate createdByLoginAsPredicate = criteriaBuilder.equal(root.get("createdByLogin"), createdByLogin);
-            filters.add(createdByLoginAsPredicate);
-        }
+//        if (StringUtils.isNotEmpty(createdByLogin)) {
+//            Predicate createdByLoginAsPredicate = criteriaBuilder.equal(root.get("createdByLogin"), createdByLogin);
+//            filters.add(createdByLoginAsPredicate);
+//        }
     }
 }
