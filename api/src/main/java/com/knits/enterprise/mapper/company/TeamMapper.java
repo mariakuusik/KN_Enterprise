@@ -16,5 +16,10 @@ import java.util.List;
         uses = {UserMapper.class})
 public interface TeamMapper extends AbstractOrganizationStructureMapper<Team, TeamDto> {
 
-
+    @Mapping(source = "startDate", target = "startDate")
+    @Mapping(source = "endDate", target = "endDate")
+    @Mapping(target = "createdBy", ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    TeamDto toDto(Team team);
+    List<TeamDto> toDtos(List<Team> entityList);
 }

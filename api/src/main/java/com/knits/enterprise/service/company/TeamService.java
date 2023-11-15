@@ -55,16 +55,16 @@ private final UserService userService;
         optionalTeam.ifPresent(team -> teamRepository.deleteById(team.getId()));
     }
 
-    public PaginatedResponseDto<TeamDto> filterTeams(TeamSearchDto searchDto) {
+    public PaginatedResponseDto<List<TeamDto>> filterTeams(TeamSearchDto searchDto) {
 
         Page<Team> teamPage = teamRepository.findAll(searchDto.getSpecification(), searchDto.getPageable());
         List<TeamDto> teamDtos = teamMapper.toDtos(teamPage.getContent());
 
-        return PaginatedResponseDto.<TeamDto>builder()
+        return PaginatedResponseDto.<List<TeamDto>>builder()
                 .page(searchDto.getPage())
                 .size(teamDtos.size())
                 .sortingFields(searchDto.getSort())
-                .sortDirection(searchDto.getSort())
+                .sortDirection(searchDto.getDir().name())
                 .data(teamDtos)
                 .build();
     }

@@ -58,19 +58,19 @@ public class EmployeeService {
     }
 
 
-    public PaginatedResponseDto<EmployeeDto> listAll(GenericSearchDto<Employee> searchDto) {
-
-        Page<Employee> employeesPage = employeeRepository.findAll(searchDto.getSpecification(),searchDto.getPageable());
-        List<EmployeeDto> employeeDtos = employeeMapper.toDtos(employeesPage.getContent());
-
-        return PaginatedResponseDto.<EmployeeDto>builder()
-                .page(searchDto.getPage())
-                .size(employeeDtos.size())
-                .sortingFields(searchDto.getSort())
-                .sortDirection(searchDto.getDir().name())
-                .data(employeeDtos)
-                .build();
-    }
+//    public PaginatedResponseDto<EmployeeDto> listAll(GenericSearchDto<Employee> searchDto) {
+//
+//        Page<Employee> employeesPage = employeeRepository.findAll(searchDto.getSpecification(),searchDto.getPageable());
+//        List<EmployeeDto> employeeDtos = employeeMapper.toDtos(employeesPage.getContent());
+//
+//        return PaginatedResponseDto.<EmployeeDto>builder()
+//                .page(searchDto.getPage())
+//                .size(employeeDtos.size())
+//                .sortingFields(searchDto.getSort())
+//                .sortDirection(searchDto.getDir().name())
+//                .data(employeeDtos)
+//                .build();
+//    }
 }
 
 

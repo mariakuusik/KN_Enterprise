@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -25,7 +26,9 @@ import java.util.List;
 @NoArgsConstructor
 public class TeamSearchDto extends GenericSearchDto<Team> {
     private String name;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
     private LocalDateTime startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS")
     private LocalDateTime endDate;
     private String createdByLogin;
 
@@ -42,7 +45,7 @@ public class TeamSearchDto extends GenericSearchDto<Team> {
         }
 
         if (endDate!=null) {
-            Predicate endDateAsAPredicate = criteriaBuilder.equal(root.get("endData"), endDate);
+            Predicate endDateAsAPredicate = criteriaBuilder.equal(root.get("endDate"), endDate);
             filters.add(endDateAsAPredicate);
         }
 

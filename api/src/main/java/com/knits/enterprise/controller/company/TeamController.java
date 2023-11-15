@@ -1,4 +1,5 @@
 package com.knits.enterprise.controller.company;
+import com.knits.enterprise.dto.common.PaginatedResponseDto;
 import com.knits.enterprise.dto.company.TeamDto;
 import com.knits.enterprise.dto.search.TeamSearchDto;
 import com.knits.enterprise.service.company.TeamService;
@@ -58,10 +59,8 @@ public class TeamController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "403", description = "Denied")})
-    public ResponseEntity<List<TeamDto>> findTeams(TeamSearchDto searchDto) {
-        List<TeamDto> teamDtos = teamService.filterTeams(searchDto).getData();
-        return ResponseEntity
-                    .ok()
-                    .body(teamDtos);
+    public ResponseEntity<PaginatedResponseDto<List<TeamDto>>> findTeams(TeamSearchDto searchDto) {
+        PaginatedResponseDto<List<TeamDto>> paginatedResponse = teamService.filterTeams(searchDto);
+        return ResponseEntity.ok().body(paginatedResponse);
     }
 }
