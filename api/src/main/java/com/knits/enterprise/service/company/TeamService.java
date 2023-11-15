@@ -23,10 +23,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class TeamService {
-
 private final TeamMapper teamMapper;
 private final TeamRepository teamRepository;
-private final UserRepository userRepository;
 private final UserService userService;
 
     @Transactional
@@ -46,7 +44,7 @@ private final UserService userService;
         Optional<Team> optionalTeam = teamRepository.findById(teamDto.getId());
         if (optionalTeam.isPresent()) {
             Team team = optionalTeam.get();
-            teamMapper.partialUpdate(teamDto, team);
+            teamMapper.partialUpdate(team, teamDto);
             Team updatedTeam = teamRepository.save(team);
             return teamMapper.toDto(updatedTeam);
         } else throw new UserException("Team with name " + teamDto.getName() + " was not found");

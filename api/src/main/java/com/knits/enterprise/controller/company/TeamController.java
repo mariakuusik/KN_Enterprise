@@ -47,8 +47,9 @@ public class TeamController {
             description = "Sets active to false and adds end-date")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK")})
-    public void deactivateTeam(@RequestParam Long id) {
+    public ResponseEntity<Void> deactivateTeam(@RequestParam Long id) {
         teamService.deactivateTeam(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/teams")

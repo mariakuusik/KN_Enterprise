@@ -16,19 +16,5 @@ import java.util.List;
         uses = {UserMapper.class})
 public interface TeamMapper extends AbstractOrganizationStructureMapper<Team, TeamDto> {
 
-    @Mapping(source = "startDate", target = "startDate", dateFormat = Constants.TIME_FORMAT_DD_MM_YYYY_HH_MM_SS)
-    @Mapping(source = "endDate", target = "endDate", dateFormat = Constants.TIME_FORMAT_DD_MM_YYYY_HH_MM_SS)
-    @Mapping(target = "createdBy", ignore = true)
-    Team toEntity(TeamDto teamDto);
 
-    @Mapping(source = "startDate", target = "startDate")
-    @Mapping(source = "endDate", target = "endDate")
-    @Mapping(target = "createdBy", ignore = true)
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    TeamDto toDto(Team team);
-
-    @Mapping(source = "startDate", target = "startDate")
-    @Mapping(source = "endDate", target = "endDate")
-    @Mapping(target = "createdBy", ignore = true)
-    Team partialUpdate(TeamDto teamDto, @MappingTarget Team team);
 }

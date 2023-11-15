@@ -27,7 +27,7 @@ public class TeamSearchDto extends GenericSearchDto<Team> {
     private String name;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-//    private String createdByLogin;
+    private String createdByLogin;
 
     protected void addFilters(Root<Team> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder, List<Predicate> filters) {
 
@@ -46,9 +46,9 @@ public class TeamSearchDto extends GenericSearchDto<Team> {
             filters.add(endDateAsAPredicate);
         }
 
-//        if (StringUtils.isNotEmpty(createdByLogin)) {
-//            Predicate createdByLoginAsPredicate = criteriaBuilder.equal(root.get("createdByLogin"), createdByLogin);
-//            filters.add(createdByLoginAsPredicate);
-//        }
+        if (StringUtils.isNotEmpty(createdByLogin)) {
+            Predicate createdByLoginAsPredicate = criteriaBuilder.equal(root.get("createdBy").get("login"), createdByLogin);
+            filters.add(createdByLoginAsPredicate);
+        }
     }
 }
