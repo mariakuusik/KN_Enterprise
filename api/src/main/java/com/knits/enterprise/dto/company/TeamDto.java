@@ -11,5 +11,4 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder(toBuilder=true)
 public class TeamDto extends AbstractOrganizationStructureDto{
-
 }
