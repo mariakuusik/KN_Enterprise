@@ -40,12 +40,12 @@ public class TeamSearchDto extends GenericSearchDto<Team> {
         }
 
         if (startDate!=null) {
-            Predicate startDateAsPredicate = criteriaBuilder.equal(root.get("startDate"), startDate);
+            Predicate startDateAsPredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("startDate"), startDate);
             filters.add(startDateAsPredicate);
         }
 
         if (endDate!=null) {
-            Predicate endDateAsAPredicate = criteriaBuilder.equal(root.get("endDate"), endDate);
+            Predicate endDateAsAPredicate = criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), endDate);
             filters.add(endDateAsAPredicate);
         }
 
