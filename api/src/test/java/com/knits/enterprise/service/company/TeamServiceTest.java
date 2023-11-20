@@ -2,6 +2,7 @@ package com.knits.enterprise.service.company;
 
 import com.knits.enterprise.dto.TeamDtoMocks;
 import com.knits.enterprise.dto.company.TeamDto;
+import com.knits.enterprise.exceptions.UserException;
 import com.knits.enterprise.mapper.company.TeamMapper;
 import com.knits.enterprise.mapper.company.TeamMapperImpl;
 import com.knits.enterprise.mapper.security.UserMapper;
@@ -21,10 +22,9 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -66,11 +66,23 @@ class TeamServiceTest {
     }
 
     @Test
-    void updateTeam() {
+    void shouldFailWithDuplicatedTeamName() {
+        TeamDto teamDto = TeamDtoMocks.testTeamDto(1L);
+        TeamDto duplicate = TeamDtoMocks.testTeamDto(1L);
+        teamService.createNewTeam(teamDto);
+        UserException userException = assertThrows(UserException.class, () ->
+        {
+            teamService.createNewTeam(duplicate);
+        });
+        assertTrue(userException.getMessage().contains("Team with name " + duplicate.getName() + " already exists"));
     }
 
     @Test
-    void deactivateTeam() {
+    void shouldUpdateTeam() {
+    }
+
+    @Test
+    void shouldDeactivateTeam() {
     }
 
     @Test

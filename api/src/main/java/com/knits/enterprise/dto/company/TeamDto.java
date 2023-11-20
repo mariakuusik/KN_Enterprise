@@ -15,7 +15,6 @@ import javax.validation.constraints.Null;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 public class TeamDto extends AbstractOrganizationStructureDto {
-//    @Null(groups = OnCreate.class, message = "ID should be null")
     @NotNull(groups = OnUpdate.class, message = "Cannot insert new ID")
     public Long getId() {
         return super.getId();

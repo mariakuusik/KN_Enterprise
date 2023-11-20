@@ -54,7 +54,6 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(id).get();
         employeeRepository.delete(employee);
         return employeeMapper.toDto(employee);
-
     }
 
 
