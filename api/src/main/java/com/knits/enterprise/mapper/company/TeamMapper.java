@@ -1,13 +1,11 @@
 package com.knits.enterprise.mapper.company;
 
-import com.knits.enterprise.config.Constants;
-import com.knits.enterprise.dto.search.TeamSearchDto;
 import com.knits.enterprise.dto.company.TeamDto;
 import com.knits.enterprise.mapper.security.UserMapper;
-import com.knits.enterprise.dto.company.TeamEditDto;
 import com.knits.enterprise.model.company.Team;
-import com.knits.enterprise.dto.search.TeamResponseDto;
-import org.mapstruct.*;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
@@ -16,4 +14,5 @@ import java.util.List;
         uses = {UserMapper.class})
 public interface TeamMapper extends AbstractOrganizationStructureMapper<Team, TeamDto> {
     List<TeamDto> toDtos(List<Team> entityList);
+
 }

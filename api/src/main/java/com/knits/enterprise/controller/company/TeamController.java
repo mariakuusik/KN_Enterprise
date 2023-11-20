@@ -74,6 +74,7 @@ public class TeamController {
             @RequestParam
             @NotNull(message = "ID is mandatory")
             @Positive(message = "Value must be greater than 0")
+            @Validated
             Long id) {
         try {
             teamService.deactivateTeam(id);
