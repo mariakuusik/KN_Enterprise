@@ -62,5 +62,5 @@ public interface EmployeeMapper extends EntityMapper<Employee, EmployeeDto> {
     @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
     List<Employee> toEntities(List<EmployeeDto> entityList);
 
-
+    List<EmployeeDto> toDtos(List<Employee>list);
 }

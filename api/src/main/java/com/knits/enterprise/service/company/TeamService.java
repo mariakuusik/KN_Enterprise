@@ -64,16 +64,16 @@ private final UserService userService;
         }
     }
 
-    public PaginatedResponseDto<List<TeamDto>> filterTeams(TeamSearchDto searchDto) {
+    public PaginatedResponseDto<List<TeamDto>> filterTeams(TeamSearchDto teamSearchDto) {
 
-        Page<Team> teamPage = teamRepository.findAll(searchDto.getSpecification(), searchDto.getPageable());
+        Page<Team> teamPage = teamRepository.findAll(teamSearchDto.getSpecification(), teamSearchDto.getPageable());
         List<TeamDto> teamDtos = teamMapper.toDtos(teamPage.getContent());
 
         return PaginatedResponseDto.<List<TeamDto>>builder()
-                .page(searchDto.getPage())
+                .page(teamSearchDto.getPage())
                 .size(teamDtos.size())
-                .sortingFields(searchDto.getSort())
-                .sortDirection(searchDto.getDir().name())
+                .sortingFields(teamSearchDto.getSort())
+                .sortDirection(teamSearchDto.getDir().name())
                 .data(teamDtos)
                 .build();
     }

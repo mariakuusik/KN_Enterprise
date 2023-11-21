@@ -1,22 +1,27 @@
 package com.knits.enterprise.controller.company;
 
+import com.knits.enterprise.dto.common.PaginatedResponseDto;
 import com.knits.enterprise.dto.company.EmployeeDto;
+import com.knits.enterprise.dto.search.EmployeeSearchDto;
 import com.knits.enterprise.service.company.EmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api")
 @Slf4j
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class EmployeeController {
-
-    @Autowired
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     @PostMapping(value = "/employees", produces = {"application/json"}, consumes = {"application/json"})
     public ResponseEntity<EmployeeDto> createNewEmployee(@RequestBody EmployeeDto employeeDto) {
@@ -33,7 +38,6 @@ public class EmployeeController {
         return ResponseEntity
                 .ok()
                 .body(employeeFound);
-
     }
 
     @PatchMapping(value = "/employees", produces = {"application/json"}, consumes = {"application/json"})
@@ -53,6 +57,15 @@ public class EmployeeController {
                 .body(employeeFound);
     }
 
-
+    @GetMapping(value = "/employees")
+    @Operation(summary = "Searches for employees by filters",
+            description = """
+                        all combinations of filters are supported, including NONE and ALL selected,
+                        for foreign key entities only ID is provided as input.
+                    """)
+    public ResponseEntity<PaginatedResponseDto<List<EmployeeDto>>> findEmployees(EmployeeSearchDto employeeSearchDto) {
+        PaginatedResponseDto<List<EmployeeDto>> paginatedResponseDto = employeeService.filterEmployees(employeeSearchDto);
+        return ResponseEntity.ok().body(paginatedResponseDto);
+    }
 
 }

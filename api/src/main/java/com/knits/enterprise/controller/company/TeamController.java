@@ -91,8 +91,8 @@ public class TeamController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "403", description = "Denied")})
-    public ResponseEntity<PaginatedResponseDto<List<TeamDto>>> findTeams(TeamSearchDto searchDto) {
-        PaginatedResponseDto<List<TeamDto>> paginatedResponse = teamService.filterTeams(searchDto);
+    public ResponseEntity<PaginatedResponseDto<List<TeamDto>>> findTeams(TeamSearchDto teamSearchDto) {
+        PaginatedResponseDto<List<TeamDto>> paginatedResponse = teamService.filterTeams(teamSearchDto);
         return ResponseEntity
                 .ok()
                 .body(paginatedResponse);
