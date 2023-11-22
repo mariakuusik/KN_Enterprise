@@ -4,7 +4,6 @@ package com.knits.enterprise.service.company;
 import com.knits.enterprise.dto.common.PaginatedResponseDto;
 import com.knits.enterprise.dto.company.EmployeeDto;
 import com.knits.enterprise.dto.search.EmployeeSearchDto;
-import com.knits.enterprise.dto.search.GenericSearchDto;
 import com.knits.enterprise.exceptions.UserException;
 import com.knits.enterprise.mapper.company.EmployeeMapper;
 import com.knits.enterprise.model.company.Employee;
@@ -15,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,6 +67,16 @@ public class EmployeeService {
                 .sortDirection(employeeSearchDto.getDir().name())
                 .data(employeeDtos)
                 .build();
+    }
+
+    public List<String> getEntityNamesForEmployee() {
+        List<String> entityNames = new ArrayList<>();
+        Class<Employee> employeeClass = Employee.class;
+        Field[] declaredFields = employeeClass.getDeclaredFields();
+        for (Field field : declaredFields) {
+            entityNames.add(field.getName());
+        }
+        return entityNames;
     }
 }
 

@@ -18,7 +18,7 @@ public class EmployeeExcelGenerator extends GenericExcelGenerator<Employee> {
     protected List<String> getColumnHeaders() {
 
         return Arrays.asList("First Name", "Last Name", "Email", "Birth Date", "Gender", "Start Date",
-                "End Date", "Company Phone", "Company Mobile Number", "Business Unit", "Country",
+                "End Date", "Company Phone", "Business Unit", "Country",
                 "Department", "Job Title", "Organization");
     }
 

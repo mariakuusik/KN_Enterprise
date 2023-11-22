@@ -4,6 +4,7 @@ import com.knits.enterprise.dto.common.PaginatedResponseDto;
 import com.knits.enterprise.dto.company.EmployeeDto;
 import com.knits.enterprise.dto.search.EmployeeSearchDto;
 import com.knits.enterprise.excel.EmployeeExcelGenerator;
+import com.knits.enterprise.excel.EmployeeExcelImporter;
 import com.knits.enterprise.mapper.company.EmployeeMapper;
 import com.knits.enterprise.model.company.Employee;
 import com.knits.enterprise.service.company.EmployeeService;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 public class EmployeeController {
     private final EmployeeService employeeService;
     private final EmployeeExcelGenerator employeeExcelGenerator;
+    private final EmployeeExcelImporter employeeExcelImporter;
     private final EmployeeMapper employeeMapper;
 
     @PostMapping(value = "/employees", produces = {"application/json"}, consumes = {"application/json"})
@@ -93,6 +96,13 @@ public class EmployeeController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    //This controller method is not finished.
+    @PostMapping(value = "/employees/xls")
+    @Operation(summary = "Creates new employee, input as excel file")
+    public void createNewEmployeeFromExcelFile(@RequestParam("file") MultipartFile excelFile) throws IOException {
+        employeeExcelImporter.importEmployees(excelFile);
     }
 
 }
