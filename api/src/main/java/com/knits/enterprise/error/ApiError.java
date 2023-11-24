@@ -10,9 +10,9 @@ public class ApiError {
 
     private int errorCode;
     private String message;
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
-    public ApiError(int errorCode, String message, Date timestamp) {
+    public ApiError(int errorCode, String message, LocalDateTime timestamp) {
         this.errorCode = errorCode;
         this.message = message;
         this.timestamp = timestamp;
