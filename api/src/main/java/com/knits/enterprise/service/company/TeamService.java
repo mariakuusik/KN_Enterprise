@@ -46,13 +46,11 @@ private final UserService userService;
 
     @Validated(OnUpdate.class)
     public TeamDto updateTeam(@Valid TeamDto teamDto) {
-        Optional<Team> optionalTeam = teamRepository.findById(teamDto.getId());
-        if (optionalTeam.isPresent()) {
-            Team team = optionalTeam.get();
+        Team team = teamRepository.findById(teamDto.getId())
+                .orElseThrow(() -> new UserException("Team with id " + teamDto.getId() + " was not found"));
             teamMapper.partialUpdate(team, teamDto);
             Team updatedTeam = teamRepository.save(team);
             return teamMapper.toDto(updatedTeam);
-        } else throw new UserException("Team with ID " + teamDto.getId() + " was not found");
     }
 
     public void deactivateTeam(Long id) {

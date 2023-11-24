@@ -5,6 +5,7 @@ import com.knits.enterprise.dto.company.TeamDto;
 import com.knits.enterprise.dto.search.TeamSearchDto;
 import com.knits.enterprise.error.ApiError;
 import com.knits.enterprise.exceptions.UserException;
+import com.knits.enterprise.model.company.Team;
 import com.knits.enterprise.service.company.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -49,17 +50,11 @@ public class TeamController {
             description = "Finds team by teamId. Possible to edit: name, description, active, startdate enddate")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Team with this ID was not found")})
-    public ResponseEntity<?> updateTeam(@Valid @RequestBody TeamDto teamDto) {
-        try {
-            TeamDto updatedTeam = teamService.updateTeam(teamDto);
-            return ResponseEntity.ok(updatedTeam);
-        } catch (UserException e) {
-            ApiError apiError = new ApiError();
-            apiError.setErrorCode(HttpStatus.BAD_REQUEST.value());
-            apiError.setMessage("Active Team with ID of " + teamDto.getId() + " was not found");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
-        }
+            @ApiResponse(responseCode = "400", description = "Bad Request. Team with this ID was not found")})
+    public ResponseEntity<TeamDto> updateTeam(@Valid @RequestBody TeamDto teamDto) {
+        return ResponseEntity
+                .ok()
+                .body(teamService.updateTeam((teamDto)));
     }
 
     @PatchMapping(value = "/teams/deactivate")
