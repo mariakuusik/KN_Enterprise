@@ -9,6 +9,9 @@ import com.knits.enterprise.mapper.company.EmployeeMapper;
 import com.knits.enterprise.model.company.Employee;
 import com.knits.enterprise.service.company.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +82,7 @@ public class EmployeeController {
         return ResponseEntity.ok().body(responseDto);
     }
 
-    @GetMapping(value = "/employees/xls")
+    @GetMapping(value = "/employees/xls", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     @Operation(summary = "Searches for employees by filters, returns data as Excel file")
     public ResponseEntity<byte[]> findEmployeesAndReturnExcelFile(EmployeeSearchDto employeeSearchDto) {
         PaginatedResponseDto<List<EmployeeDto>> responseDto = employeeService.filterEmployees(employeeSearchDto);
@@ -89,10 +92,10 @@ public class EmployeeController {
                 .collect(Collectors.toList());
         try {
             byte[] excelFile = employeeExcelGenerator.generateExcelFile(employees);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
-            headers.setContentDispositionFormData("attachment", "Employees.xlsx");
-            return new ResponseEntity<>(excelFile, headers, HttpStatus.OK);
+            return ResponseEntity
+                    .ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Employees.xlsx")
+                    .body(excelFile);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
