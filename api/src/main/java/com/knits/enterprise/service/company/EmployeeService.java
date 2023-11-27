@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -58,6 +59,7 @@ public class EmployeeService {
     public PaginatedResponseDto<List<EmployeeDto>> filterEmployees(EmployeeSearchDto employeeSearchDto) {
         Page<Employee> employeePage = employeeRepository.findAll
                 (employeeSearchDto.getSpecification(), employeeSearchDto.getPageable());
+
         List<EmployeeDto> employeeDtos = employeeMapper.toDtos(employeePage.getContent());
 
         return PaginatedResponseDto.<List<EmployeeDto>>builder()
@@ -65,7 +67,7 @@ public class EmployeeService {
                 .size(employeeDtos.size())
                 .sortingFields(employeeSearchDto.getSort())
                 .sortDirection(employeeSearchDto.getDir().name())
-                .data(employeeDtos)
+                .data(Collections.singletonList(employeeDtos))
                 .build();
     }
 

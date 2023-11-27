@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,15 +79,21 @@ public class EmployeeController {
                         for foreign key entities only ID is provided as input.
                     """)
     public ResponseEntity<PaginatedResponseDto<List<EmployeeDto>>> findEmployees(EmployeeSearchDto employeeSearchDto) {
-        PaginatedResponseDto<List<EmployeeDto>> responseDto = employeeService.filterEmployees(employeeSearchDto);
+        PaginatedResponseDto responseDto = employeeService.filterEmployees(employeeSearchDto);
         return ResponseEntity.ok().body(responseDto);
     }
 
     @GetMapping(value = "/employees/xls", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     @Operation(summary = "Searches for employees by filters, returns data as Excel file")
     public ResponseEntity<byte[]> findEmployeesAndReturnExcelFile(EmployeeSearchDto employeeSearchDto) throws IOException {
-        PaginatedResponseDto<List<EmployeeDto>> responseDto = employeeService.filterEmployees(employeeSearchDto);
-        List<EmployeeDto> employeeDtos = responseDto.getData();
+        PaginatedResponseDto<List<EmployeeDto>> paginatedResponseDto = employeeService.filterEmployees(employeeSearchDto);
+
+        //Unwrap the inner list from paginated response
+        List<EmployeeDto> employeeDtos = paginatedResponseDto.getData().stream()
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
+        //Convert list EmployeeDto to list of Employee entities
         List<Employee> employees = employeeDtos.stream()
                 .map(employeeMapper::toEntity)
                 .collect(Collectors.toList());

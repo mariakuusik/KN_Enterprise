@@ -11,12 +11,12 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaginatedResponseDto<T>{
+public class PaginatedResponseDto<T> {
 
     private int page;
     private int size;
     private String sortingFields;
     private String sortDirection;
-    private T data;
+    private List<T> data;
 
 }

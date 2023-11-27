@@ -20,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,7 +70,7 @@ public class TeamService {
                 .size(teamDtos.size())
                 .sortingFields(teamSearchDto.getSort())
                 .sortDirection(teamSearchDto.getDir().name())
-                .data(teamDtos)
+                .data(Collections.singletonList(teamDtos))
                 .build();
     }
 }

@@ -19,11 +19,11 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder(toBuilder=true)
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Slf4j
-public class EmployeeSearchDto extends GenericSearchDto<Employee>{
+public class EmployeeSearchDto extends GenericSearchDto<Employee> {
 
     private String firstName;
     private String lastName;
@@ -37,27 +37,27 @@ public class EmployeeSearchDto extends GenericSearchDto<Employee>{
 
     protected void addFilters(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder, List<Predicate> filters) {
 
-        if (StringUtils.isNotEmpty(firstName)){
+        if (StringUtils.isNotEmpty(firstName)) {
             Predicate firstNameAsPredicate = criteriaBuilder.equal(root.get("firstName"), firstName);
             filters.add(firstNameAsPredicate);
         }
 
-        if (StringUtils.isNotEmpty(lastName)){
+        if (StringUtils.isNotEmpty(lastName)) {
             Predicate lastNameAsPredicate = criteriaBuilder.equal(root.get("lastName"), lastName);
             filters.add(lastNameAsPredicate);
         }
 
         if (startDate != null) {
-            Predicate startDateAsPredicate = criteriaBuilder.equal(root.get("startDate"), startDate);
+            Predicate startDateAsPredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("startDate"), startDate);
             filters.add(startDateAsPredicate);
         }
 
         if (endDate != null) {
-            Predicate endDateAsPredicate = criteriaBuilder.equal(root.get("endDate"), endDate);
+            Predicate endDateAsPredicate = criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), endDate);
             filters.add(endDateAsPredicate);
         }
 
-        if (businessUnitId!=null) {
+        if (businessUnitId != null) {
             Predicate businessUnitIdAsPredicate = criteriaBuilder.equal(root.get("businessUnit").get("id"), businessUnitId);
             filters.add(businessUnitIdAsPredicate);
         }
