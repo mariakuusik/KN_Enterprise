@@ -4,8 +4,6 @@ import com.knits.enterprise.dto.common.PaginatedResponseDto;
 import com.knits.enterprise.dto.company.TeamDto;
 import com.knits.enterprise.dto.search.TeamSearchDto;
 import com.knits.enterprise.error.ApiError;
-import com.knits.enterprise.exceptions.UserException;
-import com.knits.enterprise.model.company.Team;
 import com.knits.enterprise.service.company.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,14 +13,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
@@ -38,7 +37,8 @@ public class TeamController {
     @Operation(summary = "Creates new Team")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "403", description = "Could not create new team")})
+            @ApiResponse(responseCode = "400", description = "RequestBody validation error"),
+            @ApiResponse(responseCode = "404", description = "Team with this ID already exists")})
     public ResponseEntity<TeamDto> createNewTeam(@Valid @RequestBody TeamDto teamDto) {
         return ResponseEntity
                 .ok()
@@ -50,7 +50,7 @@ public class TeamController {
             description = "Finds team by teamId. Possible to edit: name, description, active, startdate enddate")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Bad Request. Team with this ID was not found")})
+            @ApiResponse(responseCode = "404", description = "Team with this ID was not found")})
     public ResponseEntity<TeamDto> updateTeam(@Valid @RequestBody TeamDto teamDto) {
         return ResponseEntity
                 .ok()
@@ -62,22 +62,17 @@ public class TeamController {
             description = "Sets active to false. Doesn't add end-date.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Bad request",
-                    content = @Content(schema = @Schema(implementation = ApiError.class)))})
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> deactivateTeam(
+            @ApiResponse(responseCode = "404", description = "Team with this ID was not found"),
+            @ApiResponse(responseCode = "422", description = "RequestParam validation error")})
+    public ResponseEntity<Null> deactivateTeam(
             @RequestParam
-            @NotNull(message = "ID is mandatory")
-            @Positive(message = "Value must be greater than 0")
+            @Min(value = 1, message = "Value of ID must be greater than 0")
             @Validated
             Long id) {
-        try {
-            teamService.deactivateTeam(id);
-            return ResponseEntity.ok().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Active Team with ID of " + id + " was not found");
-        }
+        teamService.deactivateTeam(id);
+        return ResponseEntity
+                .ok()
+                .build();
     }
 
     @GetMapping(value = "/teams")

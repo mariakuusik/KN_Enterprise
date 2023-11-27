@@ -27,39 +27,36 @@ import java.util.Optional;
 @Validated
 @RequiredArgsConstructor
 public class TeamService {
-private final TeamMapper teamMapper;
-private final TeamRepository teamRepository;
-private final UserService userService;
+    private final TeamMapper teamMapper;
+    private final TeamRepository teamRepository;
+    private final UserService userService;
 
     @Transactional
     @Validated(OnCreate.class)
     public TeamDto createNewTeam(@Valid TeamDto teamDto) {
-        Boolean teamNameExists = teamRepository.existsByName(teamDto.getName());
-        if (!teamNameExists) {
-            Team team = teamMapper.toEntity(teamDto);
-            team.setStartDate(LocalDateTime.now());
-            team.setCreatedBy(userService.getCurrentUser());
-            Team newTeam = teamRepository.save(team);
-            return teamMapper.toDto(newTeam);
-        } else throw new UserException("Team with name " + teamDto.getName() + " already exists");
+        if (teamRepository.existsByName(teamDto.getName())) {
+            throw new UserException("Team with name " + teamDto.getName() + " already exists");
+        }
+        Team team = teamMapper.toEntity(teamDto);
+        team.setStartDate(LocalDateTime.now());
+        team.setCreatedBy(userService.getCurrentUser());
+        Team newTeam = teamRepository.save(team);
+        return teamMapper.toDto(newTeam);
     }
 
     @Validated(OnUpdate.class)
     public TeamDto updateTeam(@Valid TeamDto teamDto) {
         Team team = teamRepository.findById(teamDto.getId())
                 .orElseThrow(() -> new UserException("Team with id " + teamDto.getId() + " was not found"));
-            teamMapper.partialUpdate(team, teamDto);
-            Team updatedTeam = teamRepository.save(team);
-            return teamMapper.toDto(updatedTeam);
+        teamMapper.partialUpdate(team, teamDto);
+        Team updatedTeam = teamRepository.save(team);
+        return teamMapper.toDto(updatedTeam);
     }
 
     public void deactivateTeam(Long id) {
-        Optional<Team> optionalTeam = teamRepository.findById(id);
-        if (optionalTeam.isPresent()) {
-            teamRepository.deleteById(optionalTeam.get().getId());
-        } else {
-            throw new EntityNotFoundException("Active team with ID " + id + " was not found");
-        }
+        Team team = teamRepository.findById(id)
+                .orElseThrow(() -> new UserException("Active team with id " + id + " was not found"));
+        team.setActive(false);
     }
 
     public PaginatedResponseDto<List<TeamDto>> filterTeams(TeamSearchDto teamSearchDto) {

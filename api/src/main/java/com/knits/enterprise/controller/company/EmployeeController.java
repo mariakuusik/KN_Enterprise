@@ -84,21 +84,21 @@ public class EmployeeController {
 
     @GetMapping(value = "/employees/xls", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     @Operation(summary = "Searches for employees by filters, returns data as Excel file")
-    public ResponseEntity<byte[]> findEmployeesAndReturnExcelFile(EmployeeSearchDto employeeSearchDto) {
+    public ResponseEntity<byte[]> findEmployeesAndReturnExcelFile(EmployeeSearchDto employeeSearchDto) throws IOException {
         PaginatedResponseDto<List<EmployeeDto>> responseDto = employeeService.filterEmployees(employeeSearchDto);
         List<EmployeeDto> employeeDtos = responseDto.getData();
         List<Employee> employees = employeeDtos.stream()
                 .map(employeeMapper::toEntity)
                 .collect(Collectors.toList());
-        try {
-            byte[] excelFile = employeeExcelGenerator.generateExcelFile(employees);
-            return ResponseEntity
-                    .ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Employees.xlsx")
-                    .body(excelFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return generateExcelFileWithFilteredResults(employees);
+    }
+
+    private ResponseEntity<byte[]> generateExcelFileWithFilteredResults(List<Employee> employees) throws IOException {
+        byte[] excelFile = employeeExcelGenerator.generateExcelFile(employees);
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Employees.xlsx")
+                .body(excelFile);
     }
 
     //This controller method is not finished.

@@ -19,8 +19,8 @@ public class TeamDto extends AbstractOrganizationStructureDto {
     public Long getId() {
         return super.getId();
     }
-    @NotBlank(message = "Name cannot be empty")
-    @NotNull(message = "Name cannot be null")
+    @NotBlank(message = "Validation error: Name cannot be empty")
+    @NotNull(message = "Validation error: Name cannot be null")
     public String getName() {
         return super.getName();
     }

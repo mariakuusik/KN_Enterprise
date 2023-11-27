@@ -108,12 +108,8 @@ public class UserService {
     }
 
     public User getCurrentUser() {
-        Optional<User> optionalUser = userRepository.findById(1L);
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        } else {
-            throw new UserException("User not found");
-        }
+        return userRepository.findById(1L)
+                .orElseThrow(() -> new UserException("User not found"));
     }
 
     public UserDto getCurrentUserAsDto() {
