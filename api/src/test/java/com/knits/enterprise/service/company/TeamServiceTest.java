@@ -2,6 +2,7 @@ package com.knits.enterprise.service.company;
 
 import com.knits.enterprise.dto.TeamDtoMocks;
 import com.knits.enterprise.dto.company.TeamDto;
+import com.knits.enterprise.exceptions.SystemException;
 import com.knits.enterprise.exceptions.UserException;
 import com.knits.enterprise.mapper.company.TeamMapper;
 import com.knits.enterprise.mapper.company.TeamMapperImpl;
@@ -22,8 +23,11 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -32,6 +36,9 @@ class TeamServiceTest {
 
     @Spy
     private TeamMapper teamMapper = new TeamMapperImpl();
+
+    @Captor
+    private ArgumentCaptor<Team> teamCaptor;
 
     @Mock
     private TeamRepository teamRepository;
@@ -42,27 +49,22 @@ class TeamServiceTest {
     @InjectMocks
     private TeamService teamService;
 
-    @BeforeEach
-    void init() {
-        MockitoAnnotations.initMocks(this);
-    }
-
     @Test
     void shouldCreateNewTeam() {
-        TeamDto toCreateNewTeam = TeamDtoMocks.testTeamDto(1L);
+        TeamDto teamDto = TeamDtoMocks.testTeamDto(1L);
         when(teamRepository.save(Mockito.any(Team.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
-        TeamDto newTeam = teamService.createNewTeam(toCreateNewTeam);
+        TeamDto newTeam = teamService.createNewTeam(teamDto);
 
         verify(teamRepository, times(1)).save(Mockito.any());
-        verify(teamMapper, times(1)).toEntity(toCreateNewTeam);
+        verify(teamMapper, times(1)).toEntity(teamDto);
         verify(teamMapper, times(1)).toDto(Mockito.any(Team.class));
         verify(userService, times(1)).getCurrentUser();
 
         assertNotNull(newTeam);
-        assertEquals(toCreateNewTeam.getName(), newTeam.getName());
-        assertThat(toCreateNewTeam).isEqualTo(newTeam);
+        assertEquals(teamDto.getName(), newTeam.getName());
+        assertThat(teamDto).isEqualTo(newTeam);
     }
 
     @Test
@@ -70,19 +72,45 @@ class TeamServiceTest {
         TeamDto teamDto = TeamDtoMocks.testTeamDto(1L);
         TeamDto duplicate = TeamDtoMocks.testTeamDto(1L);
         teamService.createNewTeam(teamDto);
-        UserException userException = assertThrows(UserException.class, () ->
-        {
-            teamService.createNewTeam(duplicate);
-        });
-        assertTrue(userException.getMessage().contains("Team with name " + duplicate.getName() + " already exists"));
+        assertThatExceptionOfType(SystemException.class)
+                .isThrownBy(() -> {
+                    teamService.createNewTeam(duplicate);
+                }).withMessageEndingWith(" already exists");
     }
 
     @Test
     void shouldUpdateTeam() {
+
+        TeamDto requestTeamDto = TeamDtoMocks.testTeamDto(1L);
+        Long existingTeamId = requestTeamDto.getId();
+        requestTeamDto.setName("Updated test name");
+
+        when(teamRepository.findById(existingTeamId)).thenReturn(Optional.of(new Team()));
+        when(teamRepository.save(Mockito.any(Team.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        TeamDto responseTeamDto = teamService.updateTeam(requestTeamDto);
+
+        verify(teamRepository).findById(existingTeamId);
+        verify(teamRepository).save(teamCaptor.capture());
+        Team teamEntity = teamCaptor.getValue();
+
+        verify(teamRepository, times(1)).save(teamEntity);
+        verify(teamMapper, times(1)).toDto(teamEntity);
+
+        assertThat(responseTeamDto.getName()).isEqualTo(requestTeamDto.getName());
+        assertThat(responseTeamDto).isEqualTo(requestTeamDto);
     }
 
     @Test
     void shouldDeactivateTeam() {
+
+        Long teamId = 1L;
+        Team existingTeam = new Team();
+        when(teamRepository.findById(teamId)).thenReturn(Optional.of(existingTeam));
+
+        teamService.deactivateTeam(teamId);
+        assertFalse(existingTeam.isActive());
     }
 
     @Test

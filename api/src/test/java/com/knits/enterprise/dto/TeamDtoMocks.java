@@ -20,7 +20,7 @@ public class TeamDtoMocks {
                 .description("Test Description")
                 .startDate(LocalDateTime.now().format(Constants.TIME_FORMATTER))
                 .endDate(null)
-                .createdBy(UserDtoMocks.createTestUserDto(1L))
+                .createdBy(null)
                 .build();
     }
 

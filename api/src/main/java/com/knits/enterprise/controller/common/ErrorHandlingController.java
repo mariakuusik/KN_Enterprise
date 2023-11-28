@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.transaction.SystemException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.io.IOException;
@@ -29,6 +30,17 @@ public class ErrorHandlingController {
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(SystemException.class)
+    public ResponseEntity<ApiError> handleSystemException(SystemException e) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        ApiError apiError = new ApiError(
+                HttpStatus.CONFLICT.value(),
+                e.getMessage(),
+                dateTime
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(IOException.class)
     public ResponseEntity<ApiError> handleIOException(IOException e) {
         LocalDateTime dateTime = LocalDateTime.now();
@@ -41,7 +53,7 @@ public class ErrorHandlingController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleRequestBodyValidation(MethodArgumentNotValidException e) {
+    public ResponseEntity<Map<String, Object>> handleRequestBodyValidationException(MethodArgumentNotValidException e) {
         LocalDateTime dateTime = LocalDateTime.now();
         HttpStatus status = HttpStatus.BAD_REQUEST;
         List<String> errors = new ArrayList<>();
@@ -56,7 +68,7 @@ public class ErrorHandlingController {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<?> handleRequestParamValidation(ConstraintViolationException e) {
+    public ResponseEntity<?> handleRequestParamValidationException(ConstraintViolationException e) {
         LocalDateTime dateTime = LocalDateTime.now();
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
         List<String> errors = new ArrayList<>();
@@ -75,7 +87,7 @@ public class ErrorHandlingController {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<?> handleInvalidParameterType(MethodArgumentTypeMismatchException e) {
+    public ResponseEntity<?> handleInvalidParameterTypeException(MethodArgumentTypeMismatchException e) {
         LocalDateTime dateTime = LocalDateTime.now();
         ApiError apiError = new ApiError(
                 HttpStatus.BAD_REQUEST.value(),

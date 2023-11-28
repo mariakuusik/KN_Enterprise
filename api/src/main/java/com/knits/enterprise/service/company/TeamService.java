@@ -5,9 +5,11 @@ import com.knits.enterprise.dto.company.OnCreate;
 import com.knits.enterprise.dto.company.OnUpdate;
 import com.knits.enterprise.dto.company.TeamDto;
 import com.knits.enterprise.dto.search.TeamSearchDto;
+import com.knits.enterprise.exceptions.SystemException;
 import com.knits.enterprise.exceptions.UserException;
 import com.knits.enterprise.mapper.company.TeamMapper;
 import com.knits.enterprise.model.company.Team;
+import com.knits.enterprise.model.security.User;
 import com.knits.enterprise.repository.company.TeamRepository;
 import com.knits.enterprise.service.security.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,21 +28,32 @@ import java.util.Optional;
 
 @Service
 @Validated
-@RequiredArgsConstructor
 public class TeamService {
     private final TeamMapper teamMapper;
     private final TeamRepository teamRepository;
     private final UserService userService;
 
+    //Constructors are needed for testing
+    @Autowired
+    public TeamService(TeamMapper teamMapper, TeamRepository teamRepository, UserService userService) {
+        this.teamMapper = teamMapper;
+        this.teamRepository = teamRepository;
+        this.userService = userService;
+    }
+
+    //Is it good practice to throw SystemException here?
     @Transactional
     @Validated(OnCreate.class)
     public TeamDto createNewTeam(@Valid TeamDto teamDto) {
         if (teamRepository.existsByName(teamDto.getName())) {
-            throw new UserException("Team with name " + teamDto.getName() + " already exists");
+            throw new SystemException("Team with name " + teamDto.getName() + " already exists");
         }
         Team team = teamMapper.toEntity(teamDto);
         team.setStartDate(LocalDateTime.now());
-        team.setCreatedBy(userService.getCurrentUser());
+        User currentUser = userService.getCurrentUser();
+        if (currentUser != null) {
+            team.setCreatedBy(currentUser);
+        }
         Team newTeam = teamRepository.save(team);
         return teamMapper.toDto(newTeam);
     }
