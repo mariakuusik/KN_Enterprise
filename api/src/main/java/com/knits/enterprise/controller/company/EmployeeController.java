@@ -9,21 +9,15 @@ import com.knits.enterprise.mapper.company.EmployeeMapper;
 import com.knits.enterprise.model.company.Employee;
 import com.knits.enterprise.service.company.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,11 +102,13 @@ public class EmployeeController {
                 .body(excelFile);
     }
 
-    //This controller method is not finished.
     @PostMapping(value = "/employees/xls")
     @Operation(summary = "Creates new employee, input as excel file")
-    public void createNewEmployeeFromExcelFile(@RequestParam("file") MultipartFile excelFile) throws IOException {
-        employeeExcelImporter.importEmployees(excelFile);
+    public ResponseEntity <List<EmployeeDto>> createNewEmployeeFromExcelFile(@RequestParam("file") MultipartFile excelFile) throws IOException {
+        List<EmployeeDto> employeeDtos = employeeExcelImporter.importEmployees(excelFile);
+        return ResponseEntity
+                .ok()
+                .body(employeeDtos);
     }
 
 }
