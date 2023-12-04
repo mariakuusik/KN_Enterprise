@@ -73,8 +73,10 @@ public class EmployeeController {
                         for foreign key entities only ID is provided as input.
                     """)
     public ResponseEntity<PaginatedResponseDto<List<EmployeeDto>>> findEmployees(EmployeeSearchDto employeeSearchDto) {
-        PaginatedResponseDto responseDto = employeeService.filterEmployees(employeeSearchDto);
-        return ResponseEntity.ok().body(responseDto);
+        PaginatedResponseDto<List<EmployeeDto>> responseDto = employeeService.filterEmployees(employeeSearchDto);
+        return ResponseEntity
+                .ok()
+                .body(responseDto);
     }
 
     @GetMapping(value = "/employees/xls", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
@@ -104,7 +106,8 @@ public class EmployeeController {
 
     @PostMapping(value = "/employees/xls")
     @Operation(summary = "Creates new employee, input as excel file")
-    public ResponseEntity <List<EmployeeDto>> createNewEmployeeFromExcelFile(@RequestParam("file") MultipartFile excelFile) throws IOException {
+    public ResponseEntity <List<EmployeeDto>> createNewEmployeeFromExcelFile(@RequestParam("file") MultipartFile excelFile)
+            throws IOException {
         List<EmployeeDto> employeeDtos = employeeExcelImporter.importEmployees(excelFile);
         return ResponseEntity
                 .ok()

@@ -63,7 +63,7 @@ public class TeamController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "Team with this ID was not found"),
-            @ApiResponse(responseCode = "422", description = "RequestParam validation error")})
+            @ApiResponse(responseCode = "422", description = "RequestParam validation error. Value of ID must be greater that 0")})
     public ResponseEntity<Null> deactivateTeam(
             @RequestParam
             @Min(value = 1, message = "Value of ID must be greater than 0")
@@ -82,10 +82,10 @@ public class TeamController {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "403", description = "Denied")})
     public ResponseEntity<PaginatedResponseDto<List<TeamDto>>> findTeams(TeamSearchDto teamSearchDto) {
-        PaginatedResponseDto<List<TeamDto>> paginatedResponse = teamService.filterTeams(teamSearchDto);
+        PaginatedResponseDto<List<TeamDto>> paginatedResponseFilteredTeams = teamService.filterTeams(teamSearchDto);
         return ResponseEntity
                 .ok()
-                .body(paginatedResponse);
+                .body(paginatedResponseFilteredTeams);
     }
 }
 

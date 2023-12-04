@@ -49,8 +49,6 @@ public class GenericSearchDto<T>{
         };
     }
 
-
-
     @JsonIgnore
     public Pageable getPageable() {
         return PageRequest.of(
