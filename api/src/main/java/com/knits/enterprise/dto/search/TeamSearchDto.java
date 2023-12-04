@@ -1,19 +1,17 @@
 package com.knits.enterprise.dto.search;
 
-import com.knits.enterprise.dto.search.GenericSearchDto;
+import com.knits.enterprise.config.Constants;
 import com.knits.enterprise.model.company.Team;
-import com.knits.enterprise.model.security.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.w3c.dom.stylesheets.LinkStyle;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,7 +23,9 @@ import java.util.List;
 @NoArgsConstructor
 public class TeamSearchDto extends GenericSearchDto<Team> {
     private String name;
+    @DateTimeFormat(pattern = Constants.TIME_FORMAT_DD_MM_YYYY_HH_MM_SS)
     private LocalDateTime startDate;
+    @DateTimeFormat(pattern = Constants.TIME_FORMAT_DD_MM_YYYY_HH_MM_SS)
     private LocalDateTime endDate;
     private String createdByLogin;
 
@@ -37,12 +37,12 @@ public class TeamSearchDto extends GenericSearchDto<Team> {
         }
 
         if (startDate!=null) {
-            Predicate startDateAsPredicate = criteriaBuilder.equal(root.get("startDate"), startDate);
+            Predicate startDateAsPredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("startDate"), startDate);
             filters.add(startDateAsPredicate);
         }
 
         if (endDate!=null) {
-            Predicate endDateAsAPredicate = criteriaBuilder.equal(root.get("endData"), endDate);
+            Predicate endDateAsAPredicate = criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), endDate);
             filters.add(endDateAsAPredicate);
         }
 
