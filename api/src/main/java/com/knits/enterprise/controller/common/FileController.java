@@ -1,15 +1,17 @@
 package com.knits.enterprise.controller.common;
 
+import com.knits.enterprise.exceptions.UserException;
+import com.knits.enterprise.model.common.BinaryData;
 import com.knits.enterprise.model.company.Contract;
 import com.knits.enterprise.service.common.FileStorageService;
 import com.knits.enterprise.service.company.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +37,7 @@ public class FileController {
         return contentType != null && SUPPORTED_CONTENT_TYPE.contains(contentType);
     }
 
-    @PostMapping(value = "/employee/contract")
+    @PostMapping(value = "/employees/contract")
     @Operation(summary = "Adds new contract to DB, supports .pdf, .zip, .docx files.")
     public ResponseEntity<String> uploadEmploymentContract(@RequestParam("file") MultipartFile file,
                                                            @RequestParam("employeeId") Long employeeId)
@@ -49,6 +51,23 @@ public class FileController {
                 .ok()
                 .body("Successfully added new contract with id " + uploadedContract.getId() +
                         " and deactivated previous contracts with employee");
+    }
+
+    @GetMapping(value = "employees/contract/active")
+    @Operation(summary = "Employee can download their current Employment Contract")
+    public ResponseEntity<byte[]> downloadEmploymentContract(@RequestParam Long employeeId) {
+        BinaryData binaryData = fileStorageService.downloadEmploymentContract(employeeId);
+
+        if (binaryData != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDisposition(ContentDisposition.builder("attachment")
+                    .filename(binaryData.getTitle())
+                    .build());
+            return new ResponseEntity<>(binaryData.getBytes(), headers, HttpStatus.OK);
+        } else {
+            throw new UserException("Contract for employee " + employeeId + " was not found");
+        }
     }
 
 }

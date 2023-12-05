@@ -41,6 +41,14 @@ public class FileStorageService {
         return contractRepository.findById(contract.getId()).orElseThrow(() -> new UserException("Contract was not found"));
     }
 
+    @Transactional
+    public BinaryData downloadEmploymentContract(Long employeeId) {
+        Contract activeEmploymentContract = contractRepository.findByEmployee_IdAndActive(employeeId, true);
+        if (activeEmploymentContract != null) {
+            return activeEmploymentContract.getBinaryData();
+        } else throw new UserException("Contract for employee " + employeeId + " was not found");
+    }
+
     private BinaryData saveUploadedFile(MultipartFile file, String fileName) throws IOException {
         BinaryData binaryData = BinaryData.builder()
                 .title(fileName)
@@ -68,5 +76,7 @@ public class FileStorageService {
         contractRepository.save(contract);
         return contract;
     }
+
+
 }
 
