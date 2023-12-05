@@ -4,10 +4,13 @@ import com.knits.enterprise.error.ApiError;
 import com.knits.enterprise.exceptions.UserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.transaction.SystemException;
 import javax.validation.ConstraintViolation;
@@ -46,14 +49,33 @@ public class ErrorHandlingController {
         LocalDateTime dateTime = LocalDateTime.now();
         ApiError apiError = new ApiError(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "An error occurred while processing the request",
+                e.getMessage(),
                 dateTime
         );
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+        public ResponseEntity<ApiError> handleContentTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+        LocalDateTime dateTime = LocalDateTime.now();
+        ApiError apiError = new ApiError(
+                HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(),
+                e.getMessage(),
+                dateTime
+        );
+        return new  ResponseEntity<>(apiError, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
+    public ResponseEntity<String> handleMaximumSizeException(MaxUploadSizeExceededException e) {
+        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
+                .body("File is too large, maximum size is 10 MB");
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleRequestBodyValidationException(MethodArgumentNotValidException e) {
+
         LocalDateTime dateTime = LocalDateTime.now();
         HttpStatus status = HttpStatus.BAD_REQUEST;
         List<String> errors = new ArrayList<>();
