@@ -48,20 +48,26 @@ public class FileStorageService {
         return contractRepository.findById(contract.getId()).orElseThrow(() -> new UserException("Contract was not found"));
     }
 
-    private void verifyContractNameIsUnique(MultipartFile file) {
-        boolean contractNameExists = contractRepository.existsByBinaryData_Title(file.getOriginalFilename());
-        if (contractNameExists){
-            throw new UserException("Contract for this employee with the name " + file.getOriginalFilename() + " already exists," +
-                    "please choose a different file name");
-        }
-    }
-
     @Transactional
     public BinaryData downloadEmploymentContract(Long employeeId) {
         Contract activeEmploymentContract = contractRepository.findByEmployee_IdAndActive(employeeId, true);
         if (activeEmploymentContract != null) {
             return activeEmploymentContract.getBinaryData();
         } else throw new UserException("Contract for employee " + employeeId + " was not found");
+    }
+
+    public byte[] filterContracts(ContractSearchDto contractSearchDto) throws IOException {
+        Specification<Contract> specification = contractSearchDto.getSpecification();
+        List<Contract> contracts = contractRepository.findAll(specification);
+        return generateZipFile(contracts);
+    }
+
+    private void verifyContractNameIsUnique(MultipartFile file) {
+        boolean contractNameExists = contractRepository.existsByBinaryData_Title(file.getOriginalFilename());
+        if (contractNameExists){
+            throw new UserException("Contract for this employee with the name " + file.getOriginalFilename() + " already exists," +
+                    "please choose a different file name");
+        }
     }
 
     private BinaryData saveUploadedFile(MultipartFile file, String fileName) throws IOException {
@@ -90,12 +96,6 @@ public class FileStorageService {
                 .build();
         contractRepository.save(contract);
         return contract;
-    }
-
-    public byte[] filterContracts(ContractSearchDto contractSearchDto) throws IOException {
-        Specification<Contract> specification = contractSearchDto.getSpecification();
-        List<Contract> contracts = contractRepository.findAll(specification);
-        return generateZipFile(contracts);
     }
 
     private byte[] generateZipFile(List<Contract> contracts) throws IOException {
