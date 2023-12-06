@@ -1,11 +1,13 @@
 package com.knits.enterprise.controller.common;
 
+import com.knits.enterprise.dto.search.ContractSearchDto;
 import com.knits.enterprise.exceptions.UserException;
 import com.knits.enterprise.model.common.BinaryData;
 import com.knits.enterprise.model.company.Contract;
 import com.knits.enterprise.service.common.FileStorageService;
-import com.knits.enterprise.service.company.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -26,16 +28,11 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class FileController {
     private final FileStorageService fileStorageService;
-
     private static final List<String> SUPPORTED_CONTENT_TYPE = Arrays.asList(
             "application/pdf",
             "application/zip",
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     );
-
-    private boolean isSupportedContentType(String contentType) {
-        return contentType != null && SUPPORTED_CONTENT_TYPE.contains(contentType);
-    }
 
     @PostMapping(value = "/employees/contract")
     @Operation(summary = "Adds new contract to DB, supports .pdf, .zip, .docx files.")
@@ -47,10 +44,11 @@ public class FileController {
                     ("Unsupported content type: " + file.getContentType() + ". Use .pdf, .zip or .docx");
         }
         Contract uploadedContract = fileStorageService.uploadEmploymentContract(file, employeeId);
+
         return ResponseEntity
                 .ok()
                 .body("Successfully added new contract with id " + uploadedContract.getId() +
-                        " and deactivated previous contracts with employee");
+                        " and deactivated previous contracts with employee with id " + employeeId);
     }
 
     @GetMapping(value = "employees/contract/active")
@@ -64,10 +62,36 @@ public class FileController {
             headers.setContentDisposition(ContentDisposition.builder("attachment")
                     .filename(binaryData.getTitle())
                     .build());
+
             return new ResponseEntity<>(binaryData.getBytes(), headers, HttpStatus.OK);
         } else {
             throw new UserException("Contract for employee " + employeeId + " was not found");
         }
     }
+
+    @GetMapping(value = "/employees/contracts")
+    @Operation(summary = "HR officer can search for Employment Contracts with filters")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "204", description = "No contracts found based on search filters"),
+    })
+    public ResponseEntity<byte[]> findEmploymentContracts(ContractSearchDto contractSearchDto) throws IOException {
+        byte[] bytes = fileStorageService.filterContracts(contractSearchDto);
+        if (bytes.length == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(ContentDisposition.builder("attachment")
+                .filename("contracts.zip")
+                .build());
+
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+    }
+
+    private boolean isSupportedContentType(String contentType) {
+        return contentType != null && SUPPORTED_CONTENT_TYPE.contains(contentType);
+    }
+
 
 }

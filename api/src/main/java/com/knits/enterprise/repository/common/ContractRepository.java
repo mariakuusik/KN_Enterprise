@@ -14,4 +14,9 @@ public interface ContractRepository extends JpaRepository<Contract, Long>, JpaSp
 
     @Query("select c from Contract c where c.employee.id = ?1 and c.active = ?2")
     Contract findByEmployee_IdAndActive(Long id, Boolean active);
+
+    @Query("select (count(c) > 0) from Contract c where c.binaryData.title = ?1")
+    boolean existsByBinaryData_Title(String title);
+
+
 }
