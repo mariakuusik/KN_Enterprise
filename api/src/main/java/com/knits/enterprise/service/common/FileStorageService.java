@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -59,6 +60,21 @@ public class FileStorageService {
     public byte[] filterContracts(ContractSearchDto contractSearchDto) throws IOException {
         Specification<Contract> specification = contractSearchDto.getSpecification();
         List<Contract> contracts = contractRepository.findAll(specification);
+        return generateZipFile(contracts);
+    }
+
+    @Transactional
+    public List<Long> getEmployeeContractIds(Long employeeId) {
+        List<Contract> contracts = contractRepository.findByEmployee_Id(employeeId);
+        List<Long>contractIds = new ArrayList<>();
+        for (Contract contract : contracts) {
+            contractIds.add(contract.getId());
+        }
+        return contractIds;
+    }
+
+    public byte[] getContractsByIds(List<Long> ids) throws IOException {
+        List<Contract> contracts = contractRepository.findAllById(ids);
         return generateZipFile(contracts);
     }
 
