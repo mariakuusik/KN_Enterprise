@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class FileController {
     private final FileStorageService fileStorageService;
@@ -31,7 +30,12 @@ public class FileController {
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     );
 
-    @PostMapping(value = "/employees/contract")
+    @GetMapping("upload-page")
+    public String showFileUploadPage() {
+        return "fileUpload";
+    }
+
+    @PostMapping(value = "/api/employees/contract")
     @Operation(summary = "Adds new contract to DB, supports .pdf, .zip, .docx files.")
     public ResponseEntity<String> uploadEmploymentContract(@RequestParam("file") MultipartFile file,
                                                            @RequestParam("employeeId") Long employeeId)
@@ -48,7 +52,7 @@ public class FileController {
                         " and deactivated previous contracts with employee with id " + employeeId);
     }
 
-    @GetMapping(value = "employees/contract/active")
+    @GetMapping(value = "/api/employees/contract/active")
     @Operation(summary = "Employee can download their current Employment Contract")
     public ResponseEntity<byte[]> downloadEmploymentContract(@RequestParam Long employeeId) {
         BinaryData binaryData = fileStorageService.downloadEmploymentContract(employeeId);
@@ -66,7 +70,7 @@ public class FileController {
         }
     }
 
-    @GetMapping(value = "/employees/contracts")
+    @GetMapping(value = "/api/employees/contracts")
     @Operation(summary = "HR officer can search for Employment Contracts with filters")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
@@ -86,7 +90,7 @@ public class FileController {
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/employees/contracts/all")
+    @GetMapping("/api/employees/contracts/all")
     @Operation(summary = "Returns all contractIds associated with one Employee")
     public ResponseEntity <List<Long>> getEmployeeContractIds(@RequestParam Long employeeId) {
         List<Long> employeeContractIds = fileStorageService.getEmployeeContractIds(employeeId);
@@ -94,7 +98,7 @@ public class FileController {
     }
 
     //COM 199 - text files for missing id names are not added
-    @GetMapping("/employees/contracts/ids")
+    @GetMapping("/api/employees/contracts/ids")
     @Operation(summary = "Returns all contracts of an Employee based on contractIds")
     public ResponseEntity<byte[]> getEmployeeContractsByIds(@RequestParam List<Long>ids) throws IOException {
         byte[] contractsByIds = fileStorageService.getContractsByIds(ids);
