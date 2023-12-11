@@ -38,6 +38,18 @@ public class EmployeeGroupService {
         return reports;
     }
 
+    public void removeEmployeesFromGroup(Long groupId, List<Long> employeeIds) {
+        Group groupWithEmployees = getGroupWithEmployees(groupId);
+        List<Report<Employee>> reports = new ArrayList<>();
+        List<Employee> employees = getEmployeeList(employeeIds, reports);
+        for (Employee employee : employees) {
+            if (groupWithEmployees.getEmployees().contains(employee)) {
+                groupWithEmployees.getEmployees().remove(employee);
+            } else log.error("Employee not found");
+        }
+        groupRepository.save(groupWithEmployees);
+    }
+
     private Group getGroupWithEmployees(Long groupId) {
         return groupRepository.findByIdWithEmployees(groupId).orElseThrow(()
                 -> new UserException("Group with ID " + groupId + " does not exist"));

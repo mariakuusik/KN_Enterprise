@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @Slf4j
-@RequiredArgsConstructor(onConstructor_=@Autowired)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class EmployeeGroupController {
     private final EmployeeGroupService employeeGroupService;
 
@@ -27,6 +27,13 @@ public class EmployeeGroupController {
         return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 
+    @DeleteMapping(value = "/employees/group")
+    public ResponseEntity<String> removeEmployeesFromGroup(
+            @RequestParam Long groupId,
+            @RequestBody List<Long> employeeIds) {
+        employeeGroupService.removeEmployeesFromGroup(groupId, employeeIds);
+        return ResponseEntity.ok().body("Employee(s) removed from group");
+    }
 }
 
 
