@@ -45,7 +45,7 @@ public class EmployeeGroupService {
         for (Employee employee : employees) {
             if (groupWithEmployees.getEmployees().contains(employee)) {
                 groupWithEmployees.getEmployees().remove(employee);
-            } else log.error("Employee not found");
+            } else throw new UserException("Employee with ID " + employee.getId() + " is not listed in this group");
         }
         groupRepository.save(groupWithEmployees);
     }

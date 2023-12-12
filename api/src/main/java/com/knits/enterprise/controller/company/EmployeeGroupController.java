@@ -3,6 +3,7 @@ package com.knits.enterprise.controller.company;
 import com.knits.enterprise.model.company.Employee;
 import com.knits.enterprise.service.company.EmployeeGroupService;
 import com.knits.enterprise.utils.Report;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class EmployeeGroupController {
     private final EmployeeGroupService employeeGroupService;
 
     @PostMapping(value = "/employees/group")
+    @Operation(summary = "Adds Employee(s) to existing group, returns Report for each Employee added")
     public ResponseEntity<List<Report<Employee>>> addEmployeesToGroup(
             @RequestParam Long groupId,
             @RequestBody List<Long> employeeIds) {
@@ -28,6 +30,7 @@ public class EmployeeGroupController {
     }
 
     @DeleteMapping(value = "/employees/group")
+    @Operation(summary = "Removes Employee(s) from existing group")
     public ResponseEntity<String> removeEmployeesFromGroup(
             @RequestParam Long groupId,
             @RequestBody List<Long> employeeIds) {
