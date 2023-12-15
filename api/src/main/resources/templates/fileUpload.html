@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>File Upload</title>
+</head>
+<body>
+<h1>Spring MVC File Upload</h1>
+<h2>Add new contract to database, supported file types: .pdf, .zip, .docx.</h2>
+<form th:action="@{api/employees/contract}" method="post" enctype="multipart/form-data">
+    <label for="file">Select File:</label>
+    <input type="file" id="file" name="file" accept=".pdf, .zip, .docx" required>
+
+    <label for="employeeId">Employee ID:</label>
+    <input type="text" id="employeeId" name="employeeId" required>
+
+    <button type="submit">Upload File</button>
+
+</form>
+
+</body>
+</html>

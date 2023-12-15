@@ -1,8 +1,8 @@
 package com.knits.enterprise.dto.company;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.knits.enterprise.dto.security.UserDto;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -10,5 +10,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder(toBuilder=true)
 public class GroupDto extends AbstractOrganizationStructureDto{
-
+    private Long id;
+    private String name;
+    private String description;
+    private String startDate;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String endDate;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private UserDto createdBy;
 }
