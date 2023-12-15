@@ -51,7 +51,7 @@ public class FileStorageService {
 
     @Transactional
     public BinaryData downloadEmploymentContract(Long employeeId) {
-        Contract activeEmploymentContract = contractRepository.findByEmployee_IdAndActive(employeeId, true);
+        Contract activeEmploymentContract = contractRepository.findByEmployeeIdAndIsActive(employeeId, true);
         if (activeEmploymentContract != null) {
             return activeEmploymentContract.getBinaryData();
         } else throw new UserException("Contract for employee " + employeeId + " was not found");
@@ -65,7 +65,7 @@ public class FileStorageService {
 
     @Transactional
     public List<Long> getEmployeeContractIds(Long employeeId) {
-        List<Contract> contracts = contractRepository.findByEmployee_Id(employeeId);
+        List<Contract> contracts = contractRepository.findByEmployeeId(employeeId);
         List<Long>contractIds = new ArrayList<>();
         for (Contract contract : contracts) {
             contractIds.add(contract.getId());
@@ -79,7 +79,7 @@ public class FileStorageService {
     }
 
     private void verifyContractNameIsUnique(MultipartFile file) {
-        boolean contractNameExists = contractRepository.existsByBinaryData_Title(file.getOriginalFilename());
+        boolean contractNameExists = contractRepository.existsByBinaryDataTitle(file.getOriginalFilename());
         if (contractNameExists){
             throw new UserException("Contract for this employee with the name " + file.getOriginalFilename() + " already exists," +
                     "please choose a different file name");
@@ -98,7 +98,7 @@ public class FileStorageService {
     }
 
     private void deactivatePreviousEmployeeContracts(Long employeeId) {
-        List<Contract> contracts = contractRepository.findByEmployee_Id(employeeId);
+        List<Contract> contracts = contractRepository.findByEmployeeId(employeeId);
         contracts.forEach(contract -> contract.setActive(false));
     }
 
