@@ -49,13 +49,6 @@ public class EmployeeService {
         return employeeMapper.toDto(employee);
     }
 
-    @Transactional
-    public EmployeeDto deleteEmployee(Long id) {
-        Employee employee = employeeRepository.findById(id).get();
-        employeeRepository.delete(employee);
-        return employeeMapper.toDto(employee);
-    }
-
     public PaginatedResponseDto<List<EmployeeDto>> filterEmployees(EmployeeSearchDto employeeSearchDto) {
         Page<Employee> employeePage = employeeRepository.findAll
                 (employeeSearchDto.getSpecification(), employeeSearchDto.getPageable());

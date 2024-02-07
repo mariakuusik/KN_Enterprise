@@ -46,8 +46,8 @@ public class TeamController {
     }
 
     @PutMapping(value = "/teams")
-    @Operation(summary = "Edits existing team",
-            description = "Finds team by teamId. Possible to edit: name, description, active, startdate enddate")
+    @Operation(summary = "Edits existing Team",
+            description = "Finds Team by teamId. Possible to edit: name, description, active, startDate endDate")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "Team with this ID was not found")})
@@ -58,8 +58,8 @@ public class TeamController {
     }
 
     @PatchMapping(value = "/teams/deactivate")
-    @Operation(summary = "Deactivates active team",
-            description = "Sets active to false. Doesn't add end-date.")
+    @Operation(summary = "Deactivates active Team",
+            description = "Sets 'active' to false in DB. Doesn't add endDate.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "404", description = "Team with this ID was not found"),
@@ -76,8 +76,8 @@ public class TeamController {
     }
 
     @GetMapping(value = "/teams")
-    @Operation(summary = "Searches for teams by filters",
-            description = "filters are startDate, endDate, createdBy, teamName")
+    @Operation(summary = "Searches for Teams by filters",
+            description = "Filters are startDate, endDate, createdBy, teamName. Response can be paginated and sorted alphabetically.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "403", description = "Denied")})

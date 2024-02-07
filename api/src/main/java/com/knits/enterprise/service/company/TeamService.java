@@ -41,7 +41,6 @@ public class TeamService {
         this.userService = userService;
     }
 
-    //Is it good practice to throw SystemException here?
     @Transactional
     @Validated(OnCreate.class)
     public TeamDto createNewTeam(@Valid TeamDto teamDto) {

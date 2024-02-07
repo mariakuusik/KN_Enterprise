@@ -32,44 +32,10 @@ public class EmployeeController {
     private final EmployeeExcelImporter employeeExcelImporter;
     private final EmployeeMapper employeeMapper;
 
-    @PostMapping(value = "/employees", produces = {"application/json"}, consumes = {"application/json"})
-    public ResponseEntity<EmployeeDto> createNewEmployee(@RequestBody EmployeeDto employeeDto) {
-        log.debug("REST request to create Employee");
-        return ResponseEntity
-                .ok()
-                .body(employeeService.saveNewEmployee(employeeDto));
-    }
-
-    @GetMapping(value = "/employees/{id}", produces = {"application/json"})
-    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable(value = "id") final Long id) {
-        log.debug("REST request to get Employee : {}", id);
-        EmployeeDto employeeFound = employeeService.findEmployeeById(id);
-        return ResponseEntity
-                .ok()
-                .body(employeeFound);
-    }
-
-    @PatchMapping(value = "/employees", produces = {"application/json"}, consumes = {"application/json"})
-    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable(value = "id") @RequestBody EmployeeDto employeeDto) {
-        EmployeeDto employeeFound = employeeService.partialUpdate(employeeDto);
-        return ResponseEntity
-                .ok()
-                .body(employeeFound);
-    }
-
-    @PutMapping(value = "/employees/{id}", produces = {"application/json"})
-    public ResponseEntity<EmployeeDto> deleteEmployee(@PathVariable(value = "id") final Long id) {
-        log.debug("REST request to delete Employee : {}", id);
-        EmployeeDto employeeFound = employeeService.deleteEmployee(id);
-        return ResponseEntity
-                .ok()
-                .body(employeeFound);
-    }
-
     @GetMapping(value = "/employees")
-    @Operation(summary = "Searches for employees by filters",
+    @Operation(summary = "Searches for Employees by filters",
             description = """
-                        all combinations of filters are supported, including NONE and ALL selected,
+                        All combinations of filters are supported, including NONE and ALL filters selected;
                         for foreign key entities only ID is provided as input.
                     """)
     public ResponseEntity<PaginatedResponseDto<List<EmployeeDto>>> findEmployees(EmployeeSearchDto employeeSearchDto) {
@@ -80,7 +46,7 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/employees/xls", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-    @Operation(summary = "Searches for employees by filters, returns data as Excel file")
+    @Operation(summary = "Searches for Employees by filters, returns data as Excel file")
     public ResponseEntity<byte[]> findEmployeesAndReturnExcelFile(EmployeeSearchDto employeeSearchDto) throws IOException {
         PaginatedResponseDto<List<EmployeeDto>> paginatedResponseDto = employeeService.filterEmployees(employeeSearchDto);
 
@@ -105,7 +71,7 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/employees/xls")
-    @Operation(summary = "Creates new employee, input as excel file")
+    @Operation(summary = "Creates new Employee, input data as excel file")
     public ResponseEntity <List<EmployeeDto>> createNewEmployeeFromExcelFile(@RequestParam("file") MultipartFile excelFile)
             throws IOException {
         List<EmployeeDto> employeeDtos = employeeExcelImporter.importEmployees(excelFile);

@@ -36,7 +36,7 @@ public class FileController {
     }
 
     @PostMapping(value = "/api/employees/contract")
-    @Operation(summary = "Adds new contract to DB, supports .pdf, .zip, .docx files.")
+    @Operation(summary = "Adds new contract for Employee to DB, supports .pdf, .zip, .docx files.")
     public ResponseEntity<String> uploadEmploymentContract(@RequestParam("file") MultipartFile file,
                                                            @RequestParam("employeeId") Long employeeId)
             throws HttpMediaTypeNotSupportedException, IOException {
@@ -66,12 +66,12 @@ public class FileController {
 
             return new ResponseEntity<>(binaryData.getBytes(), headers, HttpStatus.OK);
         } else {
-            throw new UserException("Contract for employee " + employeeId + " was not found");
+            throw new UserException("Contract for Employee " + employeeId + " was not found");
         }
     }
 
     @GetMapping(value = "/api/employees/contracts")
-    @Operation(summary = "HR officer can search for Employment Contracts with filters")
+    @Operation(summary = "HR officer can search for Employment Contracts by filters")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "204", description = "No contracts found based on search filters"),
@@ -97,7 +97,6 @@ public class FileController {
         return ResponseEntity.ok(employeeContractIds);
     }
 
-    //COM 199 - text files for missing id names are not added
     @GetMapping("/api/employees/contracts/ids")
     @Operation(summary = "Returns all contracts of an Employee based on contractIds")
     public ResponseEntity<byte[]> getEmployeeContractsByIds(@RequestParam List<Long>ids) throws IOException {
@@ -114,6 +113,5 @@ public class FileController {
     private boolean isSupportedContentType(String contentType) {
         return contentType != null && SUPPORTED_CONTENT_TYPE.contains(contentType);
     }
-
 
 }

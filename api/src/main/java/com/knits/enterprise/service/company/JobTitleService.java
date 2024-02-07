@@ -18,28 +18,4 @@ import java.time.LocalDateTime;
 @Slf4j
 @AllArgsConstructor
 public class JobTitleService {
-
-    private final JobTitleMapper jobTitleMapper;
-    private final JobTitleRepository jobTitleRepository;
-
-    @Transactional
-    public JobTitleDto saveNewJobTitle(JobTitleDto jobTitleDto) {
-        JobTitle jobTitle = jobTitleMapper.toEntity(jobTitleDto);
-        jobTitle.setStartDate(LocalDateTime.now());
-        JobTitle savedJobTitle = jobTitleRepository.save(jobTitle);
-        return jobTitleMapper.toDto(savedJobTitle);
-    }
-
-    public JobTitleDto deactivateJobTitle(Long jobTitleId) {
-
-        JobTitle deactivateJobTitle = jobTitleRepository.findById(jobTitleId).orElse(null);
-        if (deactivateJobTitle != null) {
-            deactivateJobTitle.setEndDate(LocalDateTime.now());
-            deactivateJobTitle.setActive(false);
-            JobTitle savedJobTitle = jobTitleRepository.save(deactivateJobTitle);
-            return jobTitleMapper.toDto(savedJobTitle);
-        }
-        return null;
-
-    }
 }
